@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySQL 基础入门教程</title>
+    <link rel="stylesheet" href="css/web.css">
+    <link rel="icon" href="/icons/mysql.svg" type="image/svg+xml">
+    <style>
+        :root {
+            --primary-color: #00758F;
+            --secondary-color: #F29111;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>MySQL 基础入门教程</h1>
+            <p>从零开始学习MySQL数据库</p>
+        </header>
+
+        <nav>
+            <h2>目录</h2>
+            <ul id="toc"></ul>
+        </nav>
+
+        <main>
+            <section class="section" id="introduction">
+                <h2>1. MySQL简介</h2>
+                <p>MySQL是最流行的关系型数据库管理系统之一，由瑞典MySQL AB公司开发，目前属于Oracle公司。</p>
+                <ul>
+                    <li>开源免费</li>
+                    <li>支持多种操作系统</li>
+                    <li>使用标准SQL语言</li>
+                    <li>支持多用户、多线程</li>
+                </ul>
+            </section>
+
+            <section class="section" id="installation">
+                <h2>2. 安装与配置</h2>
+                <h3>Windows安装步骤：</h3>
+                <ol>
+                    <li>下载MySQL安装包</li>
+                    <li>运行安装程序</li>
+                    <li>配置root密码</li>
+                    <li>配置环境变量</li>
+                </ol>
+            </section>
+
+            <section class="section" id="basic-commands">
+                <h2>3. 基本命令</h2>
+                <div class="code-block">
+                    <pre><code>
+-- 登录MySQL
+mysql -u root -p
+
+-- 显示所有数据库
+SHOW DATABASES;
+
+-- 创建数据库
+CREATE DATABASE database_name;
+
+-- 使用数据库
+USE database_name;
+
+-- 显示所有表
+SHOW TABLES;
+                    </code></pre>
+                </div>
+            </section>
+
+            <section class="section" id="table-operations">
+                <h2>4. 表操作</h2>
+                <div class="code-block">
+                    <pre><code>
+-- 创建表
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 修改表
+ALTER TABLE users ADD COLUMN age INT;
+
+-- 删除表
+DROP TABLE users;
+                    </code></pre>
+                </div>
+            </section>
+
+            <section class="section" id="crud">
+                <h2>5. CRUD操作</h2>
+                <div class="code-block">
+                    <pre><code>
+-- 插入数据
+INSERT INTO users (username, email) VALUES ('张三', 'zhangsan@example.com');
+
+-- 查询数据
+SELECT * FROM users WHERE age > 18;
+
+-- 更新数据
+UPDATE users SET age = 25 WHERE username = '张三';
+
+-- 删除数据
+DELETE FROM users WHERE id = 1;
+                    </code></pre>
+                </div>
+            </section>
+
+            <section class="section" id="advanced">
+                <h2>6. 高级查询</h2>
+                <div class="code-block">
+                    <pre><code>
+-- 连接查询
+SELECT users.username, orders.order_number
+FROM users
+JOIN orders ON users.id = orders.user_id;
+
+-- 分组查询
+SELECT country, COUNT(*) as user_count
+FROM users
+GROUP BY country
+HAVING user_count > 10;
+
+-- 子查询
+SELECT username FROM users
+WHERE id IN (SELECT user_id FROM orders WHERE amount > 1000);
+                    </code></pre>
+                </div>
+            </section>
+
+            <section class="section" id="best-practices">
+                <h2>7. 最佳实践</h2>
+                <ul>
+                    <li>合理使用索引提高查询效率</li>
+                    <li>定期备份数据库</li>
+                    <li>使用预处理语句防止SQL注入</li>
+                    <li>合理设计表结构和关系</li>
+                    <li>定期优化和维护数据库</li>
+                </ul>
+            </section>
+        </main>
+
+        <div class="return-home-container">
+            <button onclick="closeAndReturn()" class="return-home-button">
+                <span class="button-icon">↩</span>
+                <span class="button-text">返回首页</span>
+            </button>
+        </div>
+    </div>
+
+    <button id="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script>
+        // 生成目录
+        function generateTOC() {
+            const toc = document.getElementById('toc');
+            const sections = document.querySelectorAll('.section h2');
+            sections.forEach(section => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.textContent = section.textContent;
+                a.href = `#${section.parentElement.id}`;
+                li.appendChild(a);
+                toc.appendChild(li);
+            });
+        }
+
+        window.onload = generateTOC;
+
+        function closeAndReturn() {
+            window.location.href = '/';
+            setTimeout(() => {
+                window.close();
+            }, 100);
+        }
+    </script>
+</body>
+</html> 

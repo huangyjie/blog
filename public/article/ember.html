@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ember.js - 开发指南</title>
+    <meta name="description" content="Ember.js 完整开发指南，包括路由、组件、模板、数据管理等核心概念和最佳实践。">
+    <meta name="keywords" content="ember, emberjs, 路由, 组件, 模板, 开发指南">
+    <link rel="stylesheet" href="css/web.css">
+    <link rel="icon" href="/icons/ember.svg" type="image/svg+xml">
+    <style>
+        :root {
+            --primary-color: #E04E39;
+            --secondary-color: #F5835F;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        nav h2 {
+            color: var(--primary-color);
+        }
+        
+        nav ul li a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .copy-btn {
+            background-color: var(--primary-color);
+        }
+        
+        .copy-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        #back-to-top {
+            background-color: var(--primary-color);
+        }
+        
+        #back-to-top:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .code-block {
+            position: relative;
+            margin: 1rem 0;
+        }
+
+        .code-block pre {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background: #1a1a1a;
+            overflow-x: auto;
+        }
+
+        .code-block code {
+            font-family: 'Fira Code', monospace;
+            color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Ember.js 开发指南</h1>
+            <p>构建现代化的、可维护的Web应用</p>
+        </header>
+
+        <nav>
+            <h2>目录</h2>
+            <ul id="toc"></ul>
+        </nav>
+
+        <main>
+            <section class="section" id="introduction">
+                <h2>简介</h2>
+                <p>Ember.js是一个用于创建雄心勃勃的Web应用程序的JavaScript框架。它提供了完整的开发栈，包括路由、组件、模板和数据管理等功能。</p>
+                <div class="features">
+                    <h3>主要特性</h3>
+                    <ul>
+                        <li>约定优于配置的开发理念</li>
+                        <li>强大的路由系统</li>
+                        <li>基于组件的架构</li>
+                        <li>内置数据管理层</li>
+                        <li>完整的测试工具链</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="section" id="installation">
+                <h2>安装与配置</h2>
+                <div class="code-block">
+                    <pre><code class="language-bash">npm install -g ember-cli
+ember new my-app
+cd my-app
+ember serve</code></pre>
+                    <button class="copy-btn" onclick="copyCode(this)">复制代码</button>
+                </div>
+                <div class="note">
+                    <p>注意：确保你的系统已安装 Node.js 12 或更高版本。</p>
+                </div>
+            </section>
+
+            <section class="section" id="routing">
+                <h2>路由系统</h2>
+                <pre><code class="language-javascript">// app/router.js
+Router.map(function() {
+  this.route('about');
+  this.route('posts', function() {
+    this.route('new');
+    this.route('edit', { path: '/:post_id/edit' });
+  });
+});</code></pre>
+            </section>
+
+            <section class="section" id="components">
+                <h2>组件开发</h2>
+                <pre><code class="language-handlebars">{{!-- app/components/blog-post.hbs --}}
+&lt;article class="blog-post"&gt;
+  &lt;h2&gt;{{@title}}&lt;/h2&gt;
+  &lt;p&gt;{{@excerpt}}&lt;/p&gt;
+  &lt;button {{on "click" this.toggleBody}}&gt;
+    {{if this.isShowingBody "Hide" "Show"}} Body
+  &lt;/button&gt;
+  {{#if this.isShowingBody}}
+    &lt;div class="body"&gt;
+      {{@body}}
+    &lt;/div&gt;
+  {{/if}}
+&lt;/article&gt;</code></pre>
+            </section>
+
+            <section class="section" id="templates">
+                <h2>模板系统</h2>
+                <pre><code class="language-handlebars">{{!-- app/templates/application.hbs --}}
+&lt;header&gt;
+  &lt;h1&gt;{{this.title}}&lt;/h1&gt;
+  &lt;nav&gt;
+    &lt;LinkTo @route="index"&gt;Home&lt;/LinkTo&gt;
+    &lt;LinkTo @route="about"&gt;About&lt;/LinkTo&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
+{{outlet}}</code></pre>
+            </section>
+
+            <section class="section" id="data">
+                <h2>数据管理</h2>
+                <pre><code class="language-javascript">// app/models/post.js
+import Model, { attr, belongsTo } from '@ember-data/model';
+
+export default class PostModel extends Model {
+  @attr('string') title;
+  @attr('string') body;
+  @attr('date') publishedAt;
+  @belongsTo('user') author;
+}</code></pre>
+            </section>
+
+            <section class="section" id="testing">
+                <h2>测试</h2>
+                <pre><code class="language-javascript">import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, click } from '@ember/test-helpers';
+import { hbs } from 'ember-cli-htmlbars';
+
+module('Integration | Component | blog-post', function(hooks) {
+  setupRenderingTest(hooks);
+
+  test('it renders', async function(assert) {
+    await render(hbs`<BlogPost @title="Hello" />`);
+    assert.dom('h2').hasText('Hello');
+  });
+});</code></pre>
+            </section>
+
+            <section class="section" id="deployment">
+                <h2>部署</h2>
+                <pre><code class="language-bash">ember build --environment=production
+# 部署dist目录到你的服务器</code></pre>
+            </section>
+
+            <section class="section" id="best-practices">
+                <h2>最佳实践</h2>
+                <div class="tips">
+                    <h3>代码组织</h3>
+                    <ul>
+                        <li>遵循 Ember 的目录结构约定</li>
+                        <li>使用 Pod 结构组织相关文件</li>
+                        <li>保持组件的单一职责</li>
+                    </ul>
+                    
+                    <h3>性能优化</h3>
+                    <ul>
+                        <li>使用 FastBoot 实现服务端渲染</li>
+                        <li>合理使用计算属性缓存</li>
+                        <li>避免不必要的观察者</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="section" id="resources">
+                <h2>相关资源</h2>
+                <div class="resources-list">
+                    <ul>
+                        <li><a href="https://emberjs.com/learn" target="_blank">官方文档</a></li>
+                        <li><a href="https://guides.emberjs.com" target="_blank">Ember 指南</a></li>
+                        <li><a href="https://api.emberjs.com" target="_blank">API 文档</a></li>
+                        <li><a href="https://ember-cli.com" target="_blank">Ember CLI</a></li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <div class="return-home-container">
+            <button onclick="closeAndReturn()" class="return-home-button">
+                <span class="button-icon">↩</span>
+                <span class="button-text">返回首页</span>
+            </button>
+        </div>
+
+        <button id="back-to-top" onclick="scrollToTop()" title="返回顶部">↑</button>
+    </div>
+
+    <script>
+        // 生成目录
+        function generateTOC() {
+            const toc = document.getElementById('toc');
+            const sections = document.querySelectorAll('.section h2');
+            sections.forEach(section => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.textContent = section.textContent;
+                a.href = `#${section.parentElement.id}`;
+                li.appendChild(a);
+                toc.appendChild(li);
+            });
+        }
+
+        // 复制代码功能
+        function copyCode(button) {
+            const pre = button.previousElementSibling;
+            const code = pre.textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = '已复制!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.textContent = '复制代码';
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('复制失败: ', err);
+            });
+        }
+
+        // 返回顶部功能
+        window.onscroll = function() {
+            const backToTop = document.getElementById("back-to-top");
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTop.classList.add("visible");
+            } else {
+                backToTop.classList.remove("visible");
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        window.onload = generateTOC;
+
+        function closeAndReturn() {
+            window.location.href = '/';
+            setTimeout(() => {
+                window.close();
+            }, 100);
+        }
+    </script>
+</body>
+</html> 

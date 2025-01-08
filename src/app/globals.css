@@ -1,0 +1,271 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+ 
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+ 
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+ 
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+ 
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+ 
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+ 
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+ 
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+ 
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+ 
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+ 
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+ 
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+ 
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* 自定义按钮样式 */
+.btn-primary {
+  @apply px-4 py-2 rounded transition-colors;
+  @apply bg-primary text-primary-foreground hover:bg-primary/90;
+  @apply dark:bg-blue-500 dark:text-white dark:hover:bg-blue-600;
+}
+
+.btn-disabled {
+  @apply px-4 py-2 rounded cursor-not-allowed;
+  @apply bg-gray-500 text-white;
+  @apply dark:bg-gray-700 dark:text-gray-300;
+} 
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 添加滚动条样式 */
+.overflow-y-auto {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+.overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+} 
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background-color: currentColor;
+  margin-left: 2px;
+  animation: blink 1s step-end infinite;
+}
+
+.typing {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* 添加聊天消息内容的样式 */
+.chat-message-content {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: monospace;
+} 
+
+/* 修改波浪动画样式 */
+.wave-animation {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  background: linear-gradient(180deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.03) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+}
+
+.wave-animation::before,
+.wave-animation::after {
+  content: '';
+  position: absolute;
+  width: 400%;
+  height: 100%;
+  background-repeat: repeat-x;
+  animation: wave-move 20s linear infinite;
+}
+
+.wave-animation::before {
+  bottom: 15px;
+  left: 0;
+  background-image: 
+    radial-gradient(circle at 50% 100%, transparent 20%, rgba(255, 255, 255, 0.1) 50%, transparent 80%),
+    linear-gradient(45deg, transparent 33.33%, rgba(255, 255, 255, 0.05) 33.33%, rgba(255, 255, 255, 0.05) 66.66%, transparent 66.66%);
+  background-size: 60px 60px, 60px 120px;
+  opacity: 0.5;
+  animation-duration: 15s;
+}
+
+.wave-animation::after {
+  bottom: 0;
+  left: -100%;
+  background-image: 
+    radial-gradient(circle at 50% 100%, transparent 20%, rgba(255, 255, 255, 0.05) 50%, transparent 80%),
+    linear-gradient(-45deg, transparent 33.33%, rgba(255, 255, 255, 0.03) 33.33%, rgba(255, 255, 255, 0.03) 66.66%, transparent 66.66%);
+  background-size: 50px 50px, 50px 100px;
+  opacity: 0.3;
+  animation-duration: 20s;
+}
+
+@keyframes wave-move {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(-25%) translateY(8px) rotate(1deg);
+  }
+  100% {
+    transform: translateX(-50%) translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes wave {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+/* 添加发光动画 */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* 应用到装饰性方格 */
+.aspect-square {
+  animation: glow 3s ease-in-out infinite;
+} 
+
+/* 更新装饰性方格样式 */
+.decorative-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 1rem;
+  opacity: 0.4;
+  perspective: 1000px;
+}
+
+.decorative-square {
+  aspect-ratio: 1;
+  border-radius: 0.5rem;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 100%);
+  transform-style: preserve-3d;
+  animation: float 6s ease-in-out infinite;
+  box-shadow: 
+    0 0 10px rgba(255,255,255,0.1),
+    inset 0 0 15px rgba(255,255,255,0.05);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  transition: all 0.5s ease;
+}
+
+.decorative-square:hover {
+  transform: translateZ(20px) rotateX(10deg) rotateY(10deg);
+  background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, transparent 100%);
+  box-shadow: 
+    0 0 20px rgba(255,255,255,0.2),
+    inset 0 0 25px rgba(255,255,255,0.1);
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateZ(0) rotateX(0) rotateY(0);
+  }
+  50% {
+    transform: translateZ(10px) rotateX(5deg) rotateY(5deg);
+  }
+} 

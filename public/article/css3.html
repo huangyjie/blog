@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS3 教程</title>
+    <link rel="icon" href="/icons/css3.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/web.css">
+    <style>
+        :root {
+            --primary-color: #264DE4;
+            --secondary-color: #2965F1;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>CSS3 教程</h1>
+            <p>CSS3 的新特性和实用技巧</p>
+        </header>
+        
+        <nav>
+            <h2>目录</h2>
+            <ul id="toc"></ul>
+        </nav>
+
+        <div class="section">
+            <h2 id="section-1">1. CSS3 简介</h2>
+            <p>CSS3 是最新的 CSS 标准，提供了新的选择器、布局模型、动画和过渡效果等。</p>
+        </div>
+
+        <div class="section">
+            <h2 id="section-2">2. 新的选择器</h2>
+            <ul>
+                <li><code>:nth-child()</code> - 选择特定位置的元素</li>
+                <li><code>:not()</code> - 排除特定元素</li>
+                <li><code>::before</code> 和 <code>::after</code> - 插入内容</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 id="section-2-1">2.1 伪类和伪元素</h2>
+            <pre data-language="CSS"><code><span class="comment">/* 伪类示例 */</span>
+:root { /* 根元素 */ }
+:first-child { /* 第一个子元素 */ }
+:last-child { /* 最后一个子元素 */ }
+:hover { /* 鼠标悬停 */ }
+:focus { /* 获得焦点 */ }
+
+<span class="comment">/* 伪元素示例 */</span>
+::before { /* 元素之前 */ }
+::after { /* 元素之后 */ }
+::first-line { /* 第一行 */ }
+::first-letter { /* 第一个字母 */ }</code></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-3">3. 布局模型</h2>
+            <pre data-language="CSS"><code><span class="comment">/* Flexbox 布局 */</span>
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+<span class="comment">/* Grid 布局 */</span>
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-4">4. 动画和过渡</h2>
+            <pre data-language="CSS"><code><span class="comment">/* 过渡效果 */</span>
+.button {
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+<span class="comment">/* 动画效果 */</span>
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.element {
+  animation: slideIn 0.5s forwards;
+}</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-5">5. 变换和滤镜</h2>
+            <pre data-language="CSS"><code><span class="comment">/* 2D 变换 */</span>
+.transform-2d {
+    transform: translate(100px, 100px)
+             rotate(45deg)
+             scale(1.5)
+             skew(10deg);
+}
+
+<span class="comment">/* 3D 变换 */</span>
+.transform-3d {
+    transform: rotateX(45deg)
+             rotateY(45deg)
+             translateZ(100px);
+    perspective: 1000px;
+}
+
+<span class="comment">/* 滤镜效果 */</span>
+.filter {
+    filter: blur(5px)
+          brightness(150%)
+          contrast(200%)
+          grayscale(50%)
+          sepia(70%);
+}</code></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-6">6. 响应式设计</h2>
+            <pre data-language="CSS"><code><span class="comment">/* 媒体查询 */</span>
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+}
+
+<span class="comment">/* 视口单位 */</span>
+.responsive {
+    width: 90vw;
+    height: 100vh;
+    font-size: calc(16px + 1vw);
+}
+
+<span class="comment">/* 图片响应式 */</span>
+img {
+    max-width: 100%;
+    height: auto;
+}</code></pre>
+        </div>
+
+        <div class="return-home-container">
+            <button onclick="closeAndReturn()" class="return-home-button">
+                <span class="button-icon">↩</span>
+                <span class="button-text">返回首页</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function generateTOC() {
+            const toc = document.getElementById('toc');
+            const sections = document.querySelectorAll('.section h2');
+            sections.forEach(section => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.textContent = section.textContent;
+                a.href = `#${section.id}`;
+                li.appendChild(a);
+                toc.appendChild(li);
+            });
+        }
+
+        window.onload = generateTOC;
+
+        function closeAndReturn() {
+            window.location.href = '/';
+            setTimeout(() => {
+                window.close();
+            }, 100);
+        }
+    </script>
+</body>
+</html> 

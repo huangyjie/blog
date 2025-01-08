@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/icons/eclipse.svg" type="image/svg+xml">
+    <title>Eclipse 安装教程</title>
+    <link rel="stylesheet" href="css/web.css">
+    <style>
+        :root {
+            --primary-color: #2C2255;
+            --secondary-color: #4B4B4B;
+            --background-color: #F5F6FA;
+            --text-color: #2C3E50;
+            --card-background: #FFFFFF;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            font-weight: 600;
+        }
+        
+        .card {
+            background: var(--card-background);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px var(--shadow-color);
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px var(--shadow-color);
+        }
+        
+        .card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .card p {
+            padding: 20px;
+            margin: 0;
+            font-size: 1.1em;
+            color: var(--text-color);
+        }
+        
+        .note {
+            background-color: #FFF3CD;
+            border-left: 4px solid #FFC107;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .tip {
+            background-color: #D4EDDA;
+            border-left: 4px solid #28A745;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .section {
+            background: var(--card-background);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+        
+        .section h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+        
+        ul {
+            padding-left: 20px;
+            margin: 15px 0;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        .return-home {
+            text-align: center;
+            margin: 40px 0 20px;
+        }
+        
+        .return-home a {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .return-home a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+                margin: 20px auto;
+            }
+            
+            h1 {
+                font-size: 2em;
+                margin-bottom: 30px;
+            }
+            
+            .card {
+                margin-bottom: 20px;
+            }
+            
+            .card p {
+                font-size: 1em;
+                padding: 15px;
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Eclipse 安装教程</h1>
+        
+        <div class="section">
+            <h2>准备工作</h2>
+            <div class="note">
+                <strong>注意：</strong>安装Eclipse之前，请确保已经安装了Java开发环境(JDK)。
+            </div>
+            <ul>
+                <li>确保电脑已连接互联网</li>
+                <li>准备足够的磁盘空间（建议至少1GB）</li>
+                <li>检查系统要求是否满足</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/1.webp" alt="解压安装包">
+            <p>1. 解压安装包：①右击【eclipse2024(64bit)】压缩包②选择解压软件③点击【解压到eclipse2024(64bit)】。</p>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/2.webp" alt="以管理员身份运行">
+            <p>2. 打开解压后的文件夹，右击【jdk-19……】选择【以管理员身份运行】。</p>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/3.webp" alt="点击下一步">
+            <p>3. 点击【下一步】。</p>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/4.webp" alt="点击下一步">
+            <p>4. 点击【下一步】。</p>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/5.webp" alt="点击关闭">
+            <p>5. 点击【关闭】。</p>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/6.webp" alt="以管理员身份运行Setup">
+            <p>6. 打开解压后的【eclipse2024(64bit)】文件夹，右击【Setup】选择【以管理员身份运行】。</p>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/7.webp" alt="选择需要安装的产品">
+            <p>7. 点击需要安装的产品（如：Eclipse IDE for Java）。</p>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/8.webp" alt="修改安装路径">
+            <p>8. 修改路径地址中的第一个字符C可更改安装位置，点击【INSTALL】。</p>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/9.webp" alt="Accept Now">
+            <p>9. 点击【Accept Now】。</p>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/10.webp" alt="安装中">
+            <p>10. 安装中...</p>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/11.webp" alt="点击Launch">
+            <p>11. 点击【LAUNCH】。</p>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/12.webp" alt="勾选Use this as">
+            <p>12. 勾选【Use this as……】，点击【Launch】。</p>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/13.webp" alt="汉化操作">
+            <p>13. 汉化操作：点击软件菜单栏中【Help】，点击【Install Software】。</p>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/14.webp" alt="取消勾选Contact all">
+            <p>14. 取消勾选【Contact all……】，点击【Add】。</p>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/15.webp" alt="输入URL">
+            <p>15. 在Location处清除原有字符并输入【https://mirrors.tuna.tsinghua.edu.cn/eclipse/technology/babel/update-site/latest/】，点击【Add】。</p>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/16.webp" alt="安装中">
+            <p>16. 安装中...</p>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/17.webp" alt="勾选中文包">
+            <p>17. 勾选【……chinese（Simplified）】，点击【Next】。</p>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/18.webp" alt="点击Next">
+            <p>18. 点击【Next】。</p>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/19.webp" alt="accept并点击Finish">
+            <p>19. 选择【accept……】，点击【Finish】。</p>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/20.webp" alt="选择Trust All">
+            <p>20. 点击【Select All】，点击【Trust Selected】。</p>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/21.webp" alt="点击Restart Now">
+            <p>21. 点击【Restart Now】。</p>
+        </div>
+
+        <div class="card">
+            <img src="Eclipse/22.webp" alt="安装成功">
+            <p>22. 安装成功！</p>
+        </div>
+
+        <div class="section">
+            <h2>常见问题解决</h2>
+            <div class="note">
+                <strong>问题1：</strong>启动时提示"A Java Runtime Environment (JRE) or Java Development Kit (JDK) must be available"
+                <p>解决方案：安装JDK并正确配置环境变量</p>
+            </div>
+            <div class="note">
+                <strong>问题2：</strong>工作空间中文乱码
+                <p>解决方案：Window > Preferences > General > Workspace，将Text file encoding设置为UTF-8</p>
+            </div>
+        </div>
+
+        <div class="return-home-container">
+            <button onclick="closeAndReturn()" class="return-home-button">
+                <span class="button-icon">↩</span>
+                <span class="button-text">返回首页</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function closeAndReturn() {
+            window.location.href = '/';
+            setTimeout(() => {
+                window.close();
+            }, 100);
+        }
+    </script>
+</body>
+</html>

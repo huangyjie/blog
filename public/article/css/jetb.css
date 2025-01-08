@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: block;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+    padding: 10px;
+    text-align: center;
+}
+
+.card img {
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+.card p {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.download-section {
+    display: flex;
+    flex-direction: column; /* 纵向排列 */
+    align-items: center; /* 居中对齐 */
+}
+
+.download-button {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 5px 0;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.download-button:hover {
+    background-color: #0056b3;
+}

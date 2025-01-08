@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 教程</title>
+    <link rel="icon" href="/icons/html5.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/web.css">
+    <style>
+        :root {
+            --primary-color: #E34F26;
+            --secondary-color: #F06529;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>HTML5 教程</h1>
+            <p>HTML5 的基础知识和新特性介绍</p>
+        </header>
+        
+        <nav>
+            <h2>目录</h2>
+            <ul id="toc"></ul>
+        </nav>
+
+        <div class="section">
+            <h2 id="section-1">1. HTML5 简介</h2>
+            <p>HTML5 是最新的 HTML 标准，提供了新的语义元素、图形和多媒体支持、以及更好的 API。</p>
+        </div>
+
+        <div class="section">
+            <h2 id="section-2">2. 新的语义元素</h2>
+            <ul>
+                <li><code>&lt;header&gt;</code> - 页眉</li>
+                <li><code>&lt;footer&gt;</code> - 页脚</li>
+                <li><code>&lt;article&gt;</code> - 文章</li>
+                <li><code>&lt;section&gt;</code> - 区块</li>
+                <li><code>&lt;nav&gt;</code> - 导航</li>
+                <li><code>&lt;aside&gt;</code> - 侧边栏</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 id="section-2-1">2.1 新的结构元素</h2>
+            <pre data-language="HTML"><code><span class="comment"><!-- 页面结构示例 --></span>
+<span class="operator">&lt;body&gt;</span>
+    <span class="operator">&lt;header&gt;</span>
+        <span class="operator">&lt;nav&gt;</span>导航菜单<span class="operator">&lt;/nav&gt;</span>
+    <span class="operator">&lt;/header&gt;</span>
+    
+    <span class="operator">&lt;main&gt;</span>
+        <span class="operator">&lt;article&gt;</span>
+            <span class="operator">&lt;section&gt;</span>第一部分<span class="operator">&lt;/section&gt;</span>
+            <span class="operator">&lt;section&gt;</span>第二部分<span class="operator">&lt;/section&gt;</span>
+        <span class="operator">&lt;/article&gt;</span>
+        
+        <span class="operator">&lt;aside&gt;</span>侧边栏<span class="operator">&lt;/aside&gt;</span>
+    <span class="operator">&lt;/main&gt;</span>
+    
+    <span class="operator">&lt;footer&gt;</span>页脚<span class="operator">&lt;/footer&gt;</span>
+<span class="operator">&lt;/body&gt;</span></code></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-3">3. 图形和多媒体</h2>
+            <pre data-language="HTML"><code><span class="comment"><!-- 绘制图形 --></span>
+<span class="operator">&lt;canvas</span> id=<span class="string">"myCanvas"</span> width=<span class="string">"200"</span> height=<span class="string">"100"</span><span class="operator">&gt;&lt;/canvas&gt;</span>
+
+<span class="comment"><!-- 嵌入视频 --></span>
+<span class="operator">&lt;video</span> controls<span class="operator">&gt;</span>
+  <span class="operator">&lt;source</span> src=<span class="string">"movie.mp4"</span> type=<span class="string">"video/mp4"</span><span class="operator">&gt;</span>
+<span class="operator">&lt;/video&gt;</span></code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-4">4. 表单增强</h2>
+            <ul>
+                <li><code>&lt;input type="email"&gt;</code> - 邮箱输入</li>
+                <li><code>&lt;input type="date"&gt;</code> - 日期选择</li>
+                <li><code>&lt;input type="range"&gt;</code> - 范围选择</li>
+                <li><code>&lt;input type="color"&gt;</code> - 颜色选择</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 id="section-5">5. HTML5 API</h2>
+            <div class="tip">
+                <strong>主要 API：</strong>
+                <ul>
+                    <li>地理定位 API (Geolocation)</li>
+                    <li>拖放 API (Drag and Drop)</li>
+                    <li>Web Storage</li>
+                    <li>Web Workers</li>
+                    <li>WebSocket</li>
+                </ul>
+            </div>
+            <pre data-language="JavaScript"><code><span class="comment">// 地理定位示例</span>
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+        position => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            console.log(`位置：${latitude}, ${longitude}`);
+        },
+        error => {
+            console.error('获取位置失败：', error);
+        }
+    );
+}</code></pre>
+        </div>
+
+        <div class="return-home-container">
+            <button onclick="closeAndReturn()" class="return-home-button">
+                <span class="button-icon">↩</span>
+                <span class="button-text">返回首页</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function generateTOC() {
+            const toc = document.getElementById('toc');
+            const sections = document.querySelectorAll('.section h2');
+            sections.forEach(section => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.textContent = section.textContent;
+                a.href = `#${section.id}`;
+                li.appendChild(a);
+                toc.appendChild(li);
+            });
+        }
+
+        window.onload = generateTOC;
+
+        function closeAndReturn() {
+            window.location.href = '/';
+            setTimeout(() => {
+                window.close();
+            }, 100);
+        }
+    </script>
+</body>
+</html> 

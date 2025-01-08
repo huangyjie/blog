@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js - Windows 开发指南</title>
+    <meta name="description" content="Node.js Windows开发完整指南，包括环境配置、服务管理、依赖管理、进程管理等实用指令和最佳实践。">
+    <meta name="keywords" content="node.js, Windows, 服务, npm, PM2, 命令行, 环境配置, 开发指南">
+    <link rel="stylesheet" href="css/web.css">
+    <link rel="icon" href="/icons/nodejs.svg" type="image/svg+xml">
+    <style>
+        :root {
+            --primary-color: #68A063;
+            --secondary-color: #3C873A;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        nav h2 {
+            color: var(--primary-color);
+        }
+        
+        nav ul li a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+        }
+        
+        .copy-btn {
+            background-color: var(--primary-color);
+        }
+        
+        .copy-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        #back-to-top {
+            background-color: var(--primary-color);
+        }
+        
+        #back-to-top:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        .return-home {
+            background-color: var(--primary-color);
+        }
+        
+        .return-home:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Node.js Windows 开发指南</h1>
+            <p>完整的 Node.js Windows 环境配置与开发指南</p>
+        </div>
+        
+        <nav>
+            <h2>目录</h2>
+            <ul id="toc"></ul>
+        </nav>
+
+        <div class="section">
+            <h2 id="section-1">1. 环境配置</h2>
+            <div class="note">
+                <strong>前置要求：</strong>
+                <ul>
+                    <li>Windows 7 及以上操作系统</li>
+                    <li>管理员权限</li>
+                    <li>稳定的网络连接</li>
+                </ul>
+            </div>
+            <p>首先需要下载并安装 Node.js：<a href="https://nodejs.org/zh-cn" target="_blank" rel="noopener">Node.js官网</a> 或 <a href="https://nodejs.org/dist/v20.18.0/node-v20.18.0-x64.msi" target="_blank" rel="noopener">直接下载</a></p>
+            <div class="tip">
+                <strong>推荐：</strong>使用 LTS（长期支持）版本以获得更稳定的体验。
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 id="section-2">2. Windows 服务管理</h2>
+            <p>使用 node-windows 模块可以将 Node.js 应用作为 Windows 服务运行：</p>
+            <pre data-language="JavaScript"><code>
+<span class="keyword">var</span> Service = <span class="keyword">require</span>(<span class="string">'node-windows'</span>).Service;
+
+<span class="keyword">var</span> svc = <span class="keyword">new</span> Service({
+    name: <span class="string">'MyNodeService'</span>,
+    description: <span class="string">'Node.js Windows Service'</span>,
+    script: <span class="string">'C:\\path\\to\\app.js'</span>,
+    nodeOptions: [
+        <span class="string">'--harmony'</span>,
+        <span class="string">'--max_old_space_size=4096'</span>
+    ]
+});
+
+<span class="comment">// 安装服务</span>
+svc.install();
+
+<span class="comment">// 监听事件</span>
+svc.on(<span class="string">'install'</span>, <span class="function">function</span>() {
+    svc.start();
+});
+            </code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-3">3. 依赖管理</h2>
+            <div class="warning">
+                <strong>注意：</strong>在安装依赖前，请确保 package.json 文件配置正确。
+            </div>
+            <h3>3.1 基本命令</h3>
+            <pre data-language="Bash"><code><span class="comment"># 安装依赖</span>
+<span class="operator">npm</span> install
+
+<span class="comment"># 安装指定包</span>
+<span class="operator">npm</span> install package-name
+
+<span class="comment"># 安装开发依赖</span>
+<span class="operator">npm</span> install package-name --save-dev
+
+<span class="comment"># 全局安装</span>
+<span class="operator">npm</span> install -g package-name</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+            
+            <h3>3.2 更新与维护</h3>
+            <pre data-language="Bash"><code><span class="comment"># 更新所有包</span>
+<span class="operator">npm</span> update
+
+<span class="comment"># 检查过时的包</span>
+<span class="operator">npm</span> outdated
+
+<span class="comment"># 删除包</span>
+<span class="operator">npm</span> uninstall package-name</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-4">4. PM2 进程管理</h2>
+            <p>PM2 是 Node.js 应用的进程管理器，提供负载均衡、应用守护、监控等功能：</p>
+            <pre data-language="Bash"><code><span class="comment"># 安装 PM2</span>
+<span class="operator">npm</span> install -g pm2
+
+<span class="comment"># 启动应用</span>
+<span class="operator">pm2</span> start app.js
+
+<span class="comment"># 启动并命名应用</span>
+<span class="operator">pm2</span> start app.js --name "my-app"
+
+<span class="comment"># 集群模式启动</span>
+<span class="operator">pm2</span> start app.js -i max
+
+<span class="comment"># 监控应用</span>
+<span class="operator">pm2</span> monit
+
+<span class="comment"># 查看日志</span>
+<span class="operator">pm2</span> logs
+
+<span class="comment"># 重启应用</span>
+<span class="operator">pm2</span> restart app.js
+
+<span class="comment"># 停止应用</span>
+<span class="operator">pm2</span> stop app.js
+
+<span class="comment"># 删除应用</span>
+<span class="operator">pm2</span> delete app.js</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-5">5. 调试技巧</h2>
+            <p>Node.js 提供多种调试方式：</p>
+            <pre data-language="Bash"><code><span class="comment"># 使用 Node.js 内置调试器</span>
+<span class="operator">node</span> inspect app.js
+
+<span class="comment"># 使用 Chrome DevTools 调试</span>
+<span class="operator">node</span> --inspect app.js
+
+<span class="comment"># 在代码中设置断点</span>
+debugger;</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+            <div class="tip">
+                <strong>提示：</strong>使用 VS Code 进行调试时，可以直接使用内置的调试工具。
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 id="section-6">6. 性能优化</h2>
+            <div class="note">
+                <strong>性能优化要点：</strong>
+                <ul>
+                    <li>合理使用内存</li>
+                    <li>避免内存泄漏</li>
+                    <li>使用流处理大文件</li>
+                    <li>适当使用集群模式</li>
+                </ul>
+            </div>
+            <pre data-language="JavaScript"><code><span class="comment">// 设置内存限制</span>
+<span class="operator">node</span> --max-old-space-size=4096 app.js
+
+<span class="comment">// 使用流处理大文件</span>
+<span class="keyword">const</span> fs = <span class="keyword">require</span>(<span class="string">'fs'</span>);
+<span class="keyword">const</span> readStream = fs.createReadStream(<span class="string">'large-file.txt'</span>);
+<span class="keyword">const</span> writeStream = fs.createWriteStream(<span class="string">'output.txt'</span>);
+readStream.pipe(writeStream);</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="return-home-container">
+            <button onclick="closeAndReturn()" class="return-home-button">
+                <span class="button-icon">↩</span>
+                <span class="button-text">返回首页</span>
+            </button>
+        </div>
+    </div>
+
+    <button id="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.previousElementSibling;
+            const text = codeBlock.textContent.trim();
+
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = "已复制";
+                button.classList.add("copied");
+
+                setTimeout(() => {
+                    button.textContent = "复制";
+                    button.classList.remove("copied");
+                }, 2000);
+            }).catch(err => {
+                console.error('复制失败: ', err);
+            });
+        }
+
+        function generateTOC() {
+            const toc = document.getElementById('toc');
+            const sections = document.querySelectorAll('.section h2');
+            sections.forEach(section => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.textContent = section.textContent;
+                a.href = `#${section.id}`;
+                li.appendChild(a);
+                toc.appendChild(li);
+            });
+        }
+
+        window.onload = generateTOC;
+
+        window.onscroll = function() {
+            const backToTop = document.getElementById("back-to-top");
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTop.classList.add("visible");
+            } else {
+                backToTop.classList.remove("visible");
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        function closeAndReturn() {
+            window.location.href = '/';
+            setTimeout(() => {
+                window.close();
+            }, 100);
+        }
+    </script>
+</body>
+</html>

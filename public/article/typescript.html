@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TypeScript - 基础教程</title>
+    <meta name="description" content="TypeScript 完整开发指南，包括类型系统、接口、泛型、装饰器等核心概念和最佳实践。">
+    <meta name="keywords" content="typescript, javascript, 类型系统, 接口, 泛型, 装饰器, 开发指南">
+    <link rel="stylesheet" href="css/web.css">
+    <link rel="icon" href="/icons/typescript.svg" type="image/svg+xml">
+    <style>
+        :root {
+            --primary-color: #3178C6;
+            --secondary-color: #235A97;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        nav h2 {
+            color: var(--primary-color);
+        }
+        
+        nav ul li a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+        }
+        
+        .copy-btn {
+            background-color: var(--primary-color);
+        }
+        
+        .copy-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        #back-to-top {
+            background-color: var(--primary-color);
+        }
+        
+        #back-to-top:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        .return-home {
+            background-color: var(--primary-color);
+        }
+        
+        .return-home:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>TypeScript 基础教程</h1>
+            <p>从入门到进阶的 TypeScript 完整指南</p>
+        </div>
+        
+        <nav>
+            <h2>目录</h2>
+            <ul id="toc"></ul>
+        </nav>
+
+        <div class="section">
+            <h2 id="section-1">1. 环境配置</h2>
+            <div class="note">
+                <strong>前置要求：</strong>
+                <ul>
+                    <li>Node.js 12.0+</li>
+                    <li>npm 或 yarn 包管理器</li>
+                    <li>编辑器（推荐 VS Code）</li>
+                </ul>
+            </div>
+            <pre data-language="Bash"><code><span class="comment"># 全局安装 TypeScript</span>
+<span class="operator">npm</span> install -g typescript
+
+<span class="comment"># 创建 tsconfig.json</span>
+<span class="operator">tsc</span> --init
+
+<span class="comment"># 编译 TypeScript 文件</span>
+<span class="operator">tsc</span> app.ts</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-2">2. 基础类型</h2>
+            <pre data-language="TypeScript"><code><span class="comment">// 基本类型</span>
+<span class="keyword">let</span> isDone: <span class="keyword">boolean</span> = false;
+<span class="keyword">let</span> decimal: <span class="keyword">number</span> = 6;
+<span class="keyword">let</span> color: <span class="keyword">string</span> = "blue";
+<span class="keyword">let</span> list: <span class="keyword">number</span>[] = [1, 2, 3];
+<span class="keyword">let</span> tuple: [<span class="keyword">string</span>, <span class="keyword">number</span>] = ["hello", 10];
+
+<span class="comment">// 枚举</span>
+<span class="keyword">enum</span> Color {
+    Red,
+    Green,
+    Blue
+}
+<span class="keyword">let</span> c: Color = Color.Green;
+
+<span class="comment">// Any 和 Unknown</span>
+<span class="keyword">let</span> notSure: <span class="keyword">any</span> = 4;
+<span class="keyword">let</span> uncertain: <span class="keyword">unknown</span> = "hello";</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-3">3. 接口</h2>
+            <pre data-language="TypeScript"><code><span class="comment">// 接口定义</span>
+<span class="keyword">interface</span> User {
+    name: <span class="keyword">string</span>;
+    age?: <span class="keyword">number</span>;  <span class="comment">// 可选属性</span>
+    readonly id: <span class="keyword">number</span>;  <span class="comment">// 只读属性</span>
+}
+
+<span class="comment">// 实现接口</span>
+<span class="keyword">class</span> Employee <span class="keyword">implements</span> User {
+    name: <span class="keyword">string</span>;
+    id: <span class="keyword">number</span>;
+
+    <span class="keyword">constructor</span>(name: <span class="keyword">string</span>, id: <span class="keyword">number</span>) {
+        <span class="keyword">this</span>.name = name;
+        <span class="keyword">this</span>.id = id;
+    }
+}</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-4">4. 泛型</h2>
+            <pre data-language="TypeScript"><code><span class="comment">// 泛型函数</span>
+<span class="keyword">function</span> identity<T>(arg: T): T {
+    <span class="keyword">return</span> arg;
+}
+
+<span class="comment">// 泛型接口</span>
+<span class="keyword">interface</span> GenericIdentityFn<T> {
+    (arg: T): T;
+}
+
+<span class="comment">// 泛型类</span>
+<span class="keyword">class</span> GenericNumber<T> {
+    zeroValue: T;
+    add: (x: T, y: T) => T;
+}</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-5">5. 装饰器</h2>
+            <pre data-language="TypeScript"><code><span class="comment">// 类装饰器</span>
+<span class="keyword">function</span> sealed(constructor: <span class="keyword">Function</span>) {
+    Object.seal(constructor);
+    Object.seal(constructor.prototype);
+}
+
+<span class="comment">// 方法装饰器</span>
+<span class="keyword">function</span> log(target: <span class="keyword">any</span>, propertyKey: <span class="keyword">string</span>, descriptor: PropertyDescriptor) {
+    <span class="keyword">const</span> originalMethod = descriptor.value;
+    descriptor.value = <span class="keyword">function</span>(...args: <span class="keyword">any</span>[]) {
+        console.log(`Calling ${propertyKey} with`, args);
+        <span class="keyword">return</span> originalMethod.apply(<span class="keyword">this</span>, args);
+    };
+}</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-6">6. 高级类型</h2>
+            <pre data-language="TypeScript"><code><span class="comment">// 联合类型</span>
+<span class="keyword">type</span> StringOrNumber = <span class="keyword">string</span> | <span class="keyword">number</span>;
+
+<span class="comment">// 交叉类型</span>
+<span class="keyword">type</span> Combined = { id: <span class="keyword">number</span> } & { name: <span class="keyword">string</span> };
+
+<span class="comment">// 类型守卫</span>
+<span class="keyword">function</span> isString(value: <span class="keyword">any</span>): value is <span class="keyword">string</span> {
+    <span class="keyword">return</span> <span class="keyword">typeof</span> value === "string";
+}
+
+<span class="comment">// 映射类型</span>
+<span class="keyword">type</span> Readonly<T> = {
+    readonly [P in keyof T]: T[P];
+};</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-7">7. 工具类型</h2>
+            <pre data-language="TypeScript"><code><span class="comment">// Partial - 使所有属性可选</span>
+<span class="keyword">type</span> PartialUser = Partial<User>;
+
+<span class="comment">// Required - 使所有属性必需</span>
+<span class="keyword">type</span> RequiredUser = Required<User>;
+
+<span class="comment">// Pick - 选择特定属性</span>
+<span class="keyword">type</span> NameOnly = Pick<User, "name">;
+
+<span class="comment">// Omit - 排除特定属性</span>
+<span class="keyword">type</span> NoId = Omit<User, "id">;</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="return-home-container">
+            <button onclick="closeAndReturn()" class="return-home-button">
+                <span class="button-icon">↩</span>
+                <span class="button-text">返回首页</span>
+            </button>
+        </div>
+    </div>
+
+    <button id="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.previousElementSibling;
+            const text = codeBlock.textContent.trim();
+
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = "已复制";
+                button.classList.add("copied");
+
+                setTimeout(() => {
+                    button.textContent = "复制";
+                    button.classList.remove("copied");
+                }, 2000);
+            }).catch(err => {
+                console.error('复制失败: ', err);
+            });
+        }
+
+        function generateTOC() {
+            const toc = document.getElementById('toc');
+            const sections = document.querySelectorAll('.section h2');
+            sections.forEach(section => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.textContent = section.textContent;
+                a.href = `#${section.id}`;
+                li.appendChild(a);
+                toc.appendChild(li);
+            });
+        }
+
+        window.onload = generateTOC;
+
+        window.onscroll = function() {
+            const backToTop = document.getElementById("back-to-top");
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTop.classList.add("visible");
+            } else {
+                backToTop.classList.remove("visible");
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        function closeAndReturn() {
+            window.location.href = '/';
+            setTimeout(() => {
+                window.close();
+            }, 100);
+        }
+    </script>
+</body>
+</html> 

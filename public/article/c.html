@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C语言入门教程</title>
+    <link rel="icon" href="/icons/c.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/web.css">
+    <style>
+        :root {
+            --primary-color: #659AD2;
+            --secondary-color: #004482;
+            --code-bg: #1E1E1E;
+            --code-color: #D4D4D4;
+            --code-comment: #6A9955;
+            --code-keyword: #569CD6;
+            --code-string: #CE9178;
+            --code-function: #DCDCAA;
+            --code-operator: #D4D4D4;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .grid-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .keyword-group {
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .keyword-group:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .keyword-group h4 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .data-type-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .data-type-table th,
+        .data-type-table td {
+            padding: 0.75rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .data-type-table th {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-weight: 600;
+        }
+
+        .data-type-table tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        .data-type-table tr:hover {
+            background-color: rgba(var(--primary-color), 0.05);
+        }
+
+        .subsection {
+            margin: 2rem 0;
+        }
+
+        .subsection h3 {
+            color: var(--primary-color);
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(var(--primary-color), 0.2);
+            font-weight: 600;
+        }
+
+        code {
+            background: rgba(var(--primary-color), 0.1);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            color: var(--secondary-color);
+            font-size: 0.9em;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        pre code {
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--code-color);
+        }
+
+        pre code .comment {
+            color: var(--code-comment);
+            font-style: italic;
+        }
+
+        pre code .keyword {
+            color: var(--code-keyword);
+            font-weight: bold;
+        }
+
+        pre code .string {
+            color: var(--code-string);
+        }
+
+        pre code .function {
+            color: var(--code-function);
+        }
+
+        pre code .operator {
+            color: var(--code-operator);
+            font-weight: bold;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            color: #fff;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .copy-btn.copied {
+            background: #28a745;
+            border-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>C语言入门教程</h1>
+            <p>从零开始学习C语言编程</p>
+        </header>
+
+        <nav>
+            <h2>目录</h2>
+            <ul id="toc"></ul>
+        </nav>
+
+        <div class="section">
+            <h2 id="section-1">1. C语言简介</h2>
+            <p>C语言是一种通用的编程语言，由Dennis Ritchie于1972年在贝尔实验室创建。它具有以下特点：</p>
+            <ul>
+                <li>高效性能</li>
+                <li>可移植性强</li>
+                <li>语法简洁</li>
+                <li>底层操作能力</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 id="section-2">2. 开发环境配置</h2>
+            <div class="note">
+                <strong>推荐开发工具：</strong>
+                <ul>
+                    <li>Dev-C++</li>
+                    <li>Visual Studio</li>
+                    <li>Code::Blocks</li>
+                    <li>CLion</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 id="section-3">3. 基础语法</h2>
+            <div class="subsection">
+                <h3>3.1 关键字</h3>
+                <p>C语言的关键字是语言预留的具有特殊含义的字符串，不能用作标识符：</p>
+                <div class="grid-list">
+                    <div class="keyword-group">
+                        <h4>数据类型关键字</h4>
+                        <ul>
+                            <li><code>void</code> - 空类型</li>
+                            <li><code>char</code> - 字符型</li>
+                            <li><code>int</code> - 整型</li>
+                            <li><code>float</code> - 单精度浮点型</li>
+                            <li><code>double</code> - 双精度浮点型</li>
+                            <li><code>short</code> - 短整型</li>
+                            <li><code>long</code> - 长整型</li>
+                        </ul>
+                    </div>
+                    <div class="keyword-group">
+                        <h4>控制流关键字</h4>
+                        <ul>
+                            <li><code>if</code> - 条件判断</li>
+                            <li><code>else</code> - 否则</li>
+                            <li><code>switch</code> - 开关选择</li>
+                            <li><code>case</code> - 开关项</li>
+                            <li><code>default</code> - 默认项</li>
+                            <li><code>for</code> - for循环</li>
+                            <li><code>while</code> - while循环</li>
+                            <li><code>do</code> - do-while循环</li>
+                            <li><code>break</code> - 跳出循环</li>
+                            <li><code>continue</code> - 继续循环</li>
+                            <li><code>goto</code> - 跳转语句</li>
+                            <li><code>return</code> - 返回</li>
+                        </ul>
+                    </div>
+                    <div class="keyword-group">
+                        <h4>存储类关键字</h4>
+                        <ul>
+                            <li><code>auto</code> - 自动存储</li>
+                            <li><code>register</code> - 寄存器存储</li>
+                            <li><code>static</code> - 静态存储</li>
+                            <li><code>extern</code> - 外部存储</li>
+                        </ul>
+                    </div>
+                    <div class="keyword-group">
+                        <h4>其他关键字</h4>
+                        <ul>
+                            <li><code>const</code> - 常量</li>
+                            <li><code>sizeof</code> - 求大小</li>
+                            <li><code>typedef</code> - 类型定义</li>
+                            <li><code>volatile</code> - 易变</li>
+                            <li><code>union</code> - 联合体</li>
+                            <li><code>struct</code> - 结构体</li>
+                            <li><code>enum</code> - 枚举</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <pre data-language="C"><code><span class="comment">// 第一个C程序</span>
+<span class="operator">#include</span> <span class="string">&lt;stdio.h&gt;</span>
+
+<span class="keyword">int</span> <span class="function">main</span>() {
+    printf(<span class="string">"Hello, World!\n"</span>);
+    <span class="keyword">return</span> 0;
+}</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-4">4. 数据类型</h2>
+            <div class="subsection">
+                <h3>4.1 基本数据类型详解</h3>
+                <table class="data-type-table">
+                    <tr>
+                        <th>类型</th>
+                        <th>字节数</th>
+                        <th>取值范围</th>
+                        <th>格式符</th>
+                    </tr>
+                    <tr>
+                        <td>char</td>
+                        <td>1</td>
+                        <td>-128 ~ 127</td>
+                        <td>%c</td>
+                    </tr>
+                    <tr>
+                        <td>unsigned char</td>
+                        <td>1</td>
+                        <td>0 ~ 255</td>
+                        <td>%c</td>
+                    </tr>
+                    <tr>
+                        <td>short</td>
+                        <td>2</td>
+                        <td>-32768 ~ 32767</td>
+                        <td>%hd</td>
+                    </tr>
+                    <tr>
+                        <td>int</td>
+                        <td>4</td>
+                        <td>-2147483648 ~ 2147483647</td>
+                        <td>%d</td>
+                    </tr>
+                    <tr>
+                        <td>long</td>
+                        <td>4/8</td>
+                        <td>-2^31 ~ 2^31-1 (32位)<br>-2^63 ~ 2^63-1 (64位)</td>
+                        <td>%ld</td>
+                    </tr>
+                    <tr>
+                        <td>float</td>
+                        <td>4</td>
+                        <td>±3.4E-38 ~ ±3.4E+38</td>
+                        <td>%f</td>
+                    </tr>
+                    <tr>
+                        <td>double</td>
+                        <td>8</td>
+                        <td>±1.7E-308 ~ ±1.7E+308</td>
+                        <td>%lf</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="subsection">
+                <h3>4.2 类型修饰符</h3>
+                <ul>
+                    <li><code>signed</code> - 有符号类型（默认）</li>
+                    <li><code>unsigned</code> - 无符号类型</li>
+                    <li><code>short</code> - 短整型</li>
+                    <li><code>long</code> - 长整型</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <h3>4.3 常量定义</h3>
+                <pre data-language="C"><code><span class="comment">// 使用 #define 定义常量</span>
+<span class="operator">#define</span> PI 3.14159
+
+<span class="comment">// 使用 const 定义常量</span>
+<span class="keyword">const</span> <span class="keyword">int</span> MAX_SIZE = 100;</code></pre>
+            </div>
+
+            <pre data-language="C"><code><span class="comment">// 基本数据类型</span>
+<span class="keyword">int</span> number = 42;           <span class="comment">// 整数</span>
+<span class="keyword">float</span> price = 3.14f;       <span class="comment">// 单精度浮点数</span>
+<span class="keyword">double</span> pi = 3.14159;      <span class="comment">// 双精度浮点数</span>
+<span class="keyword">char</span> grade = 'A';         <span class="comment">// 字符</span>
+
+<span class="comment">// 数组声明</span>
+<span class="keyword">int</span> numbers[5] = {1, 2, 3, 4, 5};</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-5">5. 控制结构</h2>
+            <div class="subsection">
+                <h3>5.1 条件语句详解</h3>
+                <pre data-language="C"><code><span class="comment">// if-else 语句</span>
+<span class="keyword">if</span> (condition1) {
+    statement1;
+} <span class="keyword">else if</span> (condition2) {
+    statement2;
+} <span class="keyword">else</span> {
+    statement3;
+}
+
+<span class="comment">// switch 语句</span>
+<span class="keyword">switch</span> (expression) {
+    <span class="keyword">case</span> constant1:
+        statement1;
+        <span class="keyword">break</span>;
+    <span class="keyword">case</span> constant2:
+        statement2;
+        <span class="keyword">break</span>;
+    <span class="keyword">default</span>:
+        statement3;
+}
+
+<span class="comment">// 三元运算符</span>
+result = (condition) ? value1 : value2;</code></pre>
+            </div>
+
+            <div class="subsection">
+                <h3>5.2 循环结构详解</h3>
+                <div class="grid-list">
+                    <div class="keyword-group">
+                        <h4>for循环</h4>
+                        <pre data-language="C"><code><span class="comment">// 基本for循环</span>
+<span class="keyword">for</span> (初始化; 条件; 更新) {
+    循环体;
+}
+
+<span class="comment">// 多重初始化和更新</span>
+<span class="keyword">for</span> (i=0,j=0; i<n; i++,j+=2) {
+    循环体;
+}</code></pre>
+                    </div>
+                    <div class="keyword-group">
+                        <h4>while循环</h4>
+                        <pre data-language="C"><code><span class="comment">// while循环</span>
+<span class="keyword">while</span> (条件) {
+    循环体;
+}
+
+<span class="comment">// do-while循环</span>
+<span class="keyword">do</span> {
+    循环体;
+} <span class="keyword">while</span> (条件);</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>5.3 跳转语句</h3>
+                <ul>
+                    <li><code>break</code> - 跳出当前循环或switch语句</li>
+                    <li><code>continue</code> - 跳过本次循环剩余语句，继续下一次循环</li>
+                    <li><code>goto</code> - 无条件跳转到指定标签</li>
+                    <li><code>return</code> - 从函数返回</li>
+                </ul>
+            </div>
+
+            <pre data-language="C"><code><span class="comment">// if-else 条件语句</span>
+<span class="keyword">if</span> (score >= 60) {
+    printf(<span class="string">"及格\n"</span>);
+} <span class="keyword">else</span> {
+    printf(<span class="string">"不及格\n"</span>);
+}
+
+<span class="comment">// for 循环</span>
+<span class="keyword">for</span>(<span class="keyword">int</span> i = 0; i < 5; i++) {
+    printf(<span class="string">"%d\n"</span>, i);
+}
+
+<span class="comment">// while 循环</span>
+<span class="keyword">while</span>(count > 0) {
+    printf(<span class="string">"%d\n"</span>, count);
+    count--;
+}</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-6">6. 函数</h2>
+            <div class="subsection">
+                <h3>6.1 函数类型</h3>
+                <div class="grid-list">
+                    <div class="keyword-group">
+                        <h4>库函数</h4>
+                        <ul>
+                            <li><code>printf()</code> - 格式化输出</li>
+                            <li><code>scanf()</code> - 格式化输入</li>
+                            <li><code>strlen()</code> - 字符串长度</li>
+                            <li><code>strcpy()</code> - 字符串复制</li>
+                            <li><code>malloc()</code> - 内存分配</li>
+                            <li><code>free()</code> - 内存释放</li>
+                        </ul>
+                    </div>
+                    <div class="keyword-group">
+                        <h4>用户自定义函数</h4>
+                        <pre data-language="C"><code><span class="comment">// 函数声明</span>
+返回类型 函数名(参数列表);
+
+<span class="comment">// 函数定义</span>
+返回类型 函数名(参数列表) {
+    函数体;
+    return 返回值;
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>6.2 函数参数传递</h3>
+                <pre data-language="C"><code><span class="comment">// 值传递</span>
+<span class="keyword">void</span> swap_value(<span class="keyword">int</span> x, <span class="keyword">int</span> y) {
+    <span class="keyword">int</span> temp = x;
+    x = y;
+    y = temp;
+}
+
+<span class="comment">// 指针传递</span>
+<span class="keyword">void</span> swap_pointer(<span class="keyword">int</span> *x, <span class="keyword">int</span> *y) {
+    <span class="keyword">int</span> temp = *x;
+    *x = *y;
+    *y = temp;
+}</code></pre>
+            </div>
+
+            <div class="subsection">
+                <h3>6.3 递归函数</h3>
+                <pre data-language="C"><code><span class="comment">// 递归示例：计算阶乘</span>
+<span class="keyword">int</span> factorial(<span class="keyword">int</span> n) {
+    <span class="keyword">if</span> (n == 0)
+        <span class="keyword">return</span> 1;
+    <span class="keyword">return</span> n * factorial(n-1);
+}</code></pre>
+            </div>
+
+            <pre data-language="C"><code><span class="comment">// 函数定义</span>
+<span class="keyword">int</span> <span class="function">add</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b) {
+    <span class="keyword">return</span> a + b;
+}
+
+<span class="comment">// 函数声明</span>
+<span class="keyword">int</span> multiply(<span class="keyword">int</span> a, <span class="keyword">int</span> b);
+
+<span class="comment">// 函数调用</span>
+<span class="keyword">int</span> result = add(5, 3);</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-7">7. 指针</h2>
+            <div class="subsection">
+                <h3>7.1 指针基础概念</h3>
+                <div class="grid-list">
+                    <div class="keyword-group">
+                        <h4>指针的定义</h4>
+                        <ul>
+                            <li>指针是存储内存地址的变量</li>
+                            <li>通过&运算符获取变量地址</li>
+                            <li>通过*运算符获取指针指向的值</li>
+                        </ul>
+                    </div>
+                    <div class="keyword-group">
+                        <h4>指针的类型</h4>
+                        <ul>
+                            <li><code>int*</code> - 整型指针</li>
+                            <li><code>char*</code> - 字符指针</li>
+                            <li><code>void*</code> - 通用指针</li>
+                            <li><code>double*</code> - 双精度指针</li>
+                        </ul>
+                    </div>
+                </div>
+                <pre data-language="C"><code><span class="comment">// 指针的基本操作</span>
+<span class="keyword">int</span> num = 10;
+<span class="keyword">int</span> *p = &num;    <span class="comment">// 指针初始化</span>
+
+printf(<span class="string">"值: %d\n"</span>, *p);     <span class="comment">// 解引用</span>
+printf(<span class="string">"地址: %p\n"</span>, p);   <span class="comment">// 打印地址</span></code></pre>
+            </div>
+
+            <div class="subsection">
+                <h3>7.2 指针的高级应用</h3>
+                <pre data-language="C"><code><span class="comment">// 指针数组</span>
+<span class="keyword">int</span> *ptr[3];        <span class="comment">// 存储指针的数组</span>
+
+<span class="comment">// 数组指针</span>
+<span class="keyword">int</span> (*ptr)[3];      <span class="comment">// 指向数组的指针</span>
+
+<span class="comment">// 函数指针</span>
+<span class="keyword">int</span> (*func)(<span class="keyword">int</span>, <span class="keyword">int</span>);  <span class="comment">// 指向函数的指针</span>
+
+<span class="comment">// 多级指针</span>
+<span class="keyword">int</span> **ptr;          <span class="comment">// 指向指针的指针</span></code></pre>
+            </div>
+
+            <div class="subsection">
+                <h3>7.3 动态内存管理</h3>
+                <pre data-language="C"><code><span class="comment">// 动态内存分配</span>
+<span class="keyword">int</span> *p = (<span class="keyword">int</span> *)malloc(<span class="keyword">sizeof</span>(<span class="keyword">int</span>));
+
+<span class="comment">// 动态数组</span>
+<span class="keyword">int</span> *arr = (<span class="keyword">int</span> *)malloc(n * <span class="keyword">sizeof</span>(<span class="keyword">int</span>));
+
+<span class="comment">// 内存释放</span>
+free(p);
+free(arr);</code></pre>
+            </div>
+
+            <pre data-language="C"><code>...现有代码保持不变...</code></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-8">8. 结构体</h2>
+            <pre data-language="C"><code><span class="comment">// 结构体定义</span>
+<span class="keyword">struct</span> Student {
+    <span class="keyword">char</span> name[50];
+    <span class="keyword">int</span> age;
+    <span class="keyword">float</span> score;
+};
+
+<span class="comment">// 结构体使用</span>
+<span class="keyword">struct</span> Student s1 = {<span class="string">"张三"</span>, 18, 85.5};</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-9">9. 文件操作</h2>
+            <pre data-language="C"><code><span class="comment">// 文件读写</span>
+FILE *fp;
+fp = fopen(<span class="string">"test.txt"</span>, <span class="string">"w"</span>);
+
+<span class="keyword">if</span>(fp != NULL) {
+    fprintf(fp, <span class="string">"Hello, File!\n"</span>);
+    fclose(fp);
+}</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-10">10. 常见错误和调试</h2>
+            <div class="warning">
+                <strong>常见错误：</strong>
+                <ul>
+                    <li>内存泄漏</li>
+                    <li>数组越界</li>
+                    <li>指针未初始化</li>
+                    <li>忘记返回值</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 id="section-11">11. 预处理器指令</h2>
+            <div class="subsection">
+                <h3>11.1 常用预处理指令</h3>
+                <div class="grid-list">
+                    <div class="keyword-group">
+                        <h4>文件包含</h4>
+                        <pre data-language="C"><code><span class="comment">// 系统头文件</span>
+<span class="operator">#include</span> <span class="string">&lt;stdio.h&gt;</span>
+
+<span class="comment">// 自定义头文件</span>
+<span class="operator">#include</span> <span class="string">"myheader.h"</span></code></pre>
+                    </div>
+                    <div class="keyword-group">
+                        <h4>宏定义</h4>
+                        <pre data-language="C"><code><span class="comment">// 常量宏</span>
+<span class="operator">#define</span> PI 3.14159
+
+<span class="comment">// 函数宏</span>
+<span class="operator">#define</span> MAX(a,b) ((a)>(b)?(a):(b))</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>11.2 条件编译</h3>
+                <pre data-language="C"><code><span class="operator">#ifdef</span> DEBUG
+    printf(<span class="string">"调试信息\n"</span>);
+<span class="operator">#endif</span>
+
+<span class="operator">#ifndef</span> HEADER_H
+<span class="operator">#define</span> HEADER_H
+    <span class="comment">// 头文件内容</span>
+<span class="operator">#endif</span>
+
+<span class="operator">#if</span> defined(WIN32)
+    <span class="comment">// Windows特定代码</span>
+<span class="operator">#elif</span> defined(LINUX)
+    <span class="comment">// Linux特定代码</span>
+<span class="operator">#endif</span></code></pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 id="section-12">12. 位运算</h2>
+            <div class="subsection">
+                <h3>12.1 位运算符</h3>
+                <table class="data-type-table">
+                    <tr>
+                        <th>运算符</th>
+                        <th>描述</th>
+                        <th>示例</th>
+                    </tr>
+                    <tr>
+                        <td>&</td>
+                        <td>按位与</td>
+                        <td>5 & 3 = 1</td>
+                    </tr>
+                    <tr>
+                        <td>|</td>
+                        <td>按位或</td>
+                        <td>5 | 3 = 7</td>
+                    </tr>
+                    <tr>
+                        <td>^</td>
+                        <td>按位异或</td>
+                        <td>5 ^ 3 = 6</td>
+                    </tr>
+                    <tr>
+                        <td>~</td>
+                        <td>按位取反</td>
+                        <td>~5 = -6</td>
+                    </tr>
+                    <tr>
+                        <td><<</td>
+                        <td>左移</td>
+                        <td>5 << 1 = 10</td>
+                    </tr>
+                    <tr>
+                        <td>>></td>
+                        <td>右移</td>
+                        <td>5 >> 1 = 2</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="subsection">
+                <h3>12.2 位运算实例</h3>
+                <pre data-language="C"><code><span class="comment">// 判断奇偶</span>
+<span class="keyword">if</span> (n & 1) {
+    printf(<span class="string">"奇数\n"</span>);
+}
+
+<span class="comment">// 2的幂次方</span>
+<span class="keyword">if</span> ((n & (n-1)) == 0) {
+    printf(<span class="string">"2的幂次方\n"</span>);
+}
+
+<span class="comment">// 交换两数</span>
+a ^= b;
+b ^= a;
+a ^= b;</code></pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 id="section-13">13. 标准库函数</h2>
+            <div class="subsection">
+                <h3>13.1 输入输出函数</h3>
+                <table class="data-type-table">
+                    <tr>
+                        <th>函数</th>
+                        <th>描述</th>
+                        <th>示例</th>
+                    </tr>
+                    <tr>
+                        <td>printf()</td>
+                        <td>格式化输出</td>
+                        <td>printf("数字: %d", num);</td>
+                    </tr>
+                    <tr>
+                        <td>scanf()</td>
+                        <td>格式化输入</td>
+                        <td>scanf("%d", &num);</td>
+                    </tr>
+                    <tr>
+                        <td>getchar()</td>
+                        <td>读取单个字符</td>
+                        <td>ch = getchar();</td>
+                    </tr>
+                    <tr>
+                        <td>putchar()</td>
+                        <td>输出单个字符</td>
+                        <td>putchar(ch);</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="subsection">
+                <h3>13.2 字符串处理函数</h3>
+                <pre data-language="C"><code><span class="comment">// 字符串长度</span>
+<span class="keyword">size_t</span> len = strlen(str);
+
+<span class="comment">// 字符串复制</span>
+strcpy(dest, src);
+strncpy(dest, src, n);
+
+<span class="comment">// 字符串连接</span>
+strcat(dest, src);
+strncat(dest, src, n);
+
+<span class="comment">// 字符串比较</span>
+<span class="keyword">int</span> result = strcmp(str1, str2);
+<span class="keyword">int</span> result = strncmp(str1, str2, n);</code></pre>
+            </div>
+
+            <div class="subsection">
+                <h3>13.3 内存操作函数</h3>
+                <pre data-language="C"><code><span class="comment">// 内存复制</span>
+memcpy(dest, src, size);
+memmove(dest, src, size);
+
+<span class="comment">// 内存设置</span>
+memset(ptr, value, size);
+
+<span class="comment">// 内存比较</span>
+<span class="keyword">int</span> result = memcmp(ptr1, ptr2, size);</code></pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 id="section-14">14. 多文件编程</h2>
+            <div class="subsection">
+                <h3>14.1 头文件</h3>
+                <pre data-language="C"><code><span class="comment">// myheader.h</span>
+<span class="operator">#ifndef</span> MYHEADER_H
+<span class="operator">#define</span> MYHEADER_H
+
+<span class="comment">// 函数声明</span>
+<span class="keyword">void</span> function1();
+<span class="keyword">int</span> function2(<span class="keyword">int</span> x);
+
+<span class="comment">// 宏定义</span>
+<span class="operator">#define</span> MAX_SIZE 100
+
+<span class="operator">#endif</span></code></pre>
+            </div>
+
+            <div class="subsection">
+                <h3>14.2 源文件组织</h3>
+                <pre data-language="C"><code><span class="comment">// main.c</span>
+<span class="operator">#include</span> <span class="string">"myheader.h"</span>
+
+<span class="keyword">int</span> main() {
+    function1();
+    <span class="keyword">return</span> 0;
+}
+
+<span class="comment">// functions.c</span>
+<span class="operator">#include</span> <span class="string">"myheader.h"</span>
+
+<span class="keyword">void</span> function1() {
+    <span class="comment">// 函数实现</span>
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 id="section-15">15. 调试技巧</h2>
+            <div class="subsection">
+                <h3>15.1 调试宏</h3>
+                <pre data-language="C"><code><span class="comment">// 调试宏定义</span>
+<span class="operator">#define</span> DEBUG
+
+<span class="operator">#ifdef</span> DEBUG
+    <span class="operator">#define</span> DBG_PRINT(fmt, args...) \
+        printf(<span class="string">"[DEBUG] "</span> fmt, ##args)
+<span class="operator">#else</span>
+    <span class="operator">#define</span> DBG_PRINT(fmt, args...)
+<span class="operator">#endif</span>
+
+<span class="comment">// 使用示例</span>
+DBG_PRINT(<span class="string">"变量值: %d\n"</span>, x);</code></pre>
+            </div>
+
+            <div class="subsection">
+                <h3>15.2 断言</h3>
+                <pre data-language="C"><code><span class="operator">#include</span> <span class="string">&lt;assert.h&gt;</span>
+
+<span class="comment">// 使用断言检查条件</span>
+assert(ptr != NULL);
+assert(size > 0);
+
+<span class="comment">// 静态断言（C11）</span>
+_Static_assert(sizeof(<span class="keyword">int</span>) == 4, <span class="string">"需要4字节整型"</span>);</code></pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 id="section-16">16. 高级数据结构</h2>
+            <div class="subsection">
+                <h3>16.1 链表</h3>
+                <pre data-language="C"><code><span class="comment">// 单链表定义</span>
+<span class="keyword">struct</span> Node {
+    <span class="keyword">int</span> data;
+    <span class="keyword">struct</span> Node* next;
+};
+
+<span class="comment">// 创建新节点</span>
+<span class="keyword">struct</span> Node* createNode(<span class="keyword">int</span> data) {
+    <span class="keyword">struct</span> Node* newNode = (<span class="keyword">struct</span> Node*)malloc(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    <span class="keyword">return</span> newNode;
+}
+
+<span class="comment">// 插入节点</span>
+<span class="keyword">void</span> insertNode(<span class="keyword">struct</span> Node** head, <span class="keyword">int</span> data) {
+    <span class="keyword">struct</span> Node* newNode = createNode(data);
+    newNode->next = *head;
+    *head = newNode;
+}</code></pre>
+            </div>
+
+            <div class="subsection">
+                <h3>16.2 二叉树</h3>
+                <pre data-language="C"><code><span class="comment">// 二叉树节点定义</span>
+<span class="keyword">struct</span> TreeNode {
+    <span class="keyword">int</span> data;
+    <span class="keyword">struct</span> TreeNode* left;
+    <span class="keyword">struct</span> TreeNode* right;
+};
+
+<span class="comment">// 创建新节点</span>
+<span class="keyword">struct</span> TreeNode* createTreeNode(<span class="keyword">int</span> data) {
+    <span class="keyword">struct</span> TreeNode* node = (<span class="keyword">struct</span> TreeNode*)malloc(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> TreeNode));
+    node->data = data;
+    node->left = NULL;
+    node->right = NULL;
+    <span class="keyword">return</span> node;
+}
+
+<span class="comment">// 中序遍历</span>
+<span class="keyword">void</span> inorderTraversal(<span class="keyword">struct</span> TreeNode* root) {
+    <span class="keyword">if</span> (root != NULL) {
+        inorderTraversal(root->left);
+        printf(<span class="string">"%d "</span>, root->data);
+        inorderTraversal(root->right);
+    }
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 id="section-17">17. 算法实现</h2>
+            <div class="subsection">
+                <h3>17.1 排序算法</h3>
+                <pre data-language="C"><code><span class="comment">// 冒泡排序</span>
+<span class="keyword">void</span> bubbleSort(<span class="keyword">int</span> arr[], <span class="keyword">int</span> n) {
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i < n-1; i++) {
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = 0; j < n-i-1; j++) {
+            <span class="keyword">if</span> (arr[j] > arr[j+1]) {
+                <span class="comment">// 交换元素</span>
+                <span class="keyword">int</span> temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+    }
+}
+
+<span class="comment">// 快速排序</span>
+<span class="keyword">void</span> quickSort(<span class="keyword">int</span> arr[], <span class="keyword">int</span> low, <span class="keyword">int</span> high) {
+    <span class="keyword">if</span> (low < high) {
+        <span class="keyword">int</span> pivot = partition(arr, low, high);
+        quickSort(arr, low, pivot - 1);
+        quickSort(arr, pivot + 1, high);
+    }
+}</code></pre>
+            </div>
+
+            <div class="subsection">
+                <h3>17.2 查找算法</h3>
+                <pre data-language="C"><code><span class="comment">// 二分查找</span>
+<span class="keyword">int</span> binarySearch(<span class="keyword">int</span> arr[], <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> x) {
+    <span class="keyword">while</span> (left <= right) {
+        <span class="keyword">int</span> mid = left + (right - left) / 2;
+        
+        <span class="keyword">if</span> (arr[mid] == x)
+            <span class="keyword">return</span> mid;
+        
+        <span class="keyword">if</span> (arr[mid] < x)
+            left = mid + 1;
+        <span class="keyword">else</span>
+            right = mid - 1;
+    }
+    <span class="keyword">return</span> -1;
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 id="section-18">18. 多线程编程</h2>
+            <div class="subsection">
+                <h3>18.1 线程创建与管理</h3>
+                <pre data-language="C"><code><span class="operator">#include</span> <span class="string">&lt;pthread.h&gt;</span>
+
+<span class="comment">// 线程函数</span>
+<span class="keyword">void</span>* threadFunction(<span class="keyword">void</span>* arg) {
+    printf(<span class="string">"线程执行中...\n"</span>);
+    <span class="keyword">return</span> NULL;
+}
+
+<span class="keyword">int</span> main() {
+    pthread_t thread;
+    <span class="keyword">int</span> result = pthread_create(&thread, NULL, threadFunction, NULL);
+    
+    <span class="comment">// 等待线程结束</span>
+    pthread_join(thread, NULL);
+    
+    <span class="keyword">return</span> 0;
+}
+
+<span class="comment">// 互斥锁</span>
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
+<span class="comment">// 加锁</span>
+pthread_mutex_lock(&mutex);
+<span class="comment">// 临界区代码</span>
+pthread_mutex_unlock(&mutex);</code></pre>
+            </div>
+
+            <div class="subsection">
+                <h3>18.2 互斥锁</h3>
+                <pre data-language="C"><code><span class="comment">// 互斥锁定义和使用</span>
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
+<span class="comment">// 加锁</span>
+pthread_mutex_lock(&mutex);
+<span class="comment">// 临界区代码</span>
+pthread_mutex_unlock(&mutex);</code></pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 id="section-19">19. 网络编程基础</h2>
+            <div class="subsection">
+                <h3>19.1 Socket编程</h3>
+                <pre data-language="C"><code><span class="operator">#include</span> <span class="string">&lt;sys/socket.h&gt;</span>
+<span class="operator">#include</span> <span class="string">&lt;netinet/in.h&gt;</span>
+
+<span class="comment">// 创建服务器</span>
+<span class="keyword">int</span> server_fd = socket(AF_INET, SOCK_STREAM, 0);
+<span class="keyword">struct</span> sockaddr_in address;
+address.sin_family = AF_INET;
+address.sin_addr.s_addr = INADDR_ANY;
+address.sin_port = htons(PORT);
+
+bind(server_fd, (<span class="keyword">struct</span> sockaddr *)&address, <span class="keyword">sizeof</span>(address));
+listen(server_fd, 3);
+
+<span class="comment">// 接受连接</span>
+<span class="keyword">int</span> new_socket = accept(server_fd, NULL, NULL);</code></pre>
+            </div>
+
+            <div class="subsection">
+                <h3>19.2 HTTP请求</h3>
+                <pre data-language="C"><code><span class="comment">// 简单的HTTP GET请求</span>
+<span class="keyword">char</span> request[] = 
+    <span class="string">"GET / HTTP/1.1\r\n"</span>
+    <span class="string">"Host: example.com\r\n"</span>
+    <span class="string">"Connection: close\r\n"</span>
+    <span class="string">"\r\n"</span>;
+
+send(sock, request, strlen(request), 0);</code></pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 id="section-20">20. 进程间通信</h2>
+            <div class="subsection">
+                <h3>20.1 管道通信</h3>
+                <pre data-language="C"><code><span class="comment">// 创建管道</span>
+<span class="keyword">int</span> pipefd[2];
+pipe(pipefd);
+
+<span class="keyword">if</span> (fork() == 0) {
+    <span class="comment">// 子进程写入</span>
+    close(pipefd[0]);
+    write(pipefd[1], <span class="string">"Hello"</span>, 5);
+} <span class="keyword">else</span> {
+    <span class="comment">// 父进程读取</span>
+    close(pipefd[1]);
+    <span class="keyword">char</span> buf[10];
+    read(pipefd[0], buf, 10);
+}</code></pre>
+            </div>
+
+            <div class="subsection">
+                <h3>20.2 共享内存</h3>
+                <pre data-language="C"><code><span class="operator">#include</span> <span class="string">&lt;sys/shm.h&gt;</span>
+
+<span class="comment">// 创建共享内存</span>
+<span class="keyword">int</span> shmid = shmget(IPC_PRIVATE, 1024, IPC_CREAT | 0666);
+
+<span class="comment">// 附加到进程空间</span>
+<span class="keyword">char</span> *shared_memory = shmat(shmid, NULL, 0);
+
+<span class="comment">// 使用共享内存</span>
+strcpy(shared_memory, <span class="string">"Hello Shared Memory"</span>);
+
+<span class="comment">// 分离共享内存</span>
+shmdt(shared_memory);</code></pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 id="section-21">21. 高级内存管理</h2>
+            <div class="subsection">
+                <h3>21.1 内存对齐</h3>
+                <pre data-language="C"><code><span class="comment">// 结构体内存对齐</span>
+<span class="operator">#pragma</span> pack(push, 1)  <span class="comment">// 1字节对齐</span>
+<span class="keyword">struct</span> PackedData {
+    <span class="keyword">char</span> c;     <span class="comment">// 1字节</span>
+    <span class="keyword">int</span> i;      <span class="comment">// 4字节</span>
+    <span class="keyword">short</span> s;    <span class="comment">// 2字节</span>
+};
+<span class="operator">#pragma</span> pack(pop)
+
+<span class="comment">// 使用alignas指定对齐（C11）</span>
+<span class="keyword">alignas</span>(8) <span class="keyword">struct</span> AlignedData {
+    <span class="keyword">char</span> data[3];
+};</code></pre>
+            </div>
+
+            <div class="subsection">
+                <h3>21.2 内存池</h3>
+                <pre data-language="C"><code><span class="comment">// 简单内存池实现</span>
+<span class="keyword">struct</span> MemoryPool {
+    <span class="keyword">void</span> *pool;
+    <span class="keyword">size_t</span> size;
+    <span class="keyword">size_t</span> used;
+};
+
+<span class="keyword">void</span>* allocFromPool(<span class="keyword">struct</span> MemoryPool *mp, <span class="keyword">size_t</span> size) {
+    <span class="keyword">if</span> (mp->used + size > mp->size)
+        <span class="keyword">return</span> NULL;
+    
+    <span class="keyword">void</span> *ptr = (<span class="keyword">char</span>*)mp->pool + mp->used;
+    mp->used += size;
+    <span class="keyword">return</span> ptr;
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="return-home-container">
+            <button onclick="closeAndReturn()" class="return-home-button">
+                <span class="button-icon">↩</span>
+                <span class="button-text">返回首页</span>
+            </button>
+        </div>
+    </div>
+
+    <button id="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.previousElementSibling;
+            const text = codeBlock.textContent.trim();
+
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = "已复制";
+                button.classList.add("copied");
+
+                setTimeout(() => {
+                    button.textContent = "复制";
+                    button.classList.remove("copied");
+                }, 2000);
+            }).catch(err => {
+                console.error('复制失败: ', err);
+            });
+        }
+
+        function generateTOC() {
+            const toc = document.getElementById('toc');
+            const sections = document.querySelectorAll('.section h2');
+            sections.forEach(section => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.textContent = section.textContent;
+                a.href = `#${section.id}`;
+                li.appendChild(a);
+                toc.appendChild(li);
+            });
+        }
+
+        window.onload = generateTOC;
+
+        window.onscroll = function() {
+            const backToTop = document.getElementById("back-to-top");
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTop.classList.add("visible");
+            } else {
+                backToTop.classList.remove("visible");
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        function closeAndReturn() {
+            window.location.href = '/';
+            setTimeout(() => {
+                window.close();
+            }, 100);
+        }
+    </script>
+</body>
+</html>

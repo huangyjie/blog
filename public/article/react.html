@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React.js - 开发指南</title>
+    <meta name="description" content="React.js 完整开发指南，包括环境配置、组件开发、状态管理、路由配置、Hooks使用等核心概念和最佳实践。">
+    <meta name="keywords" content="react.js, react hooks, 组件, redux, react-router, 开发指南">
+    <link rel="stylesheet" href="css/web.css">
+    <link rel="icon" href="/icons/react.svg" type="image/svg+xml">
+    <style>
+        :root {
+            --primary-color: #61dafb;
+            --secondary-color: #282c34;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        nav h2 {
+            color: var(--primary-color);
+        }
+        
+        nav ul li a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+        }
+        
+        .copy-btn {
+            background-color: var(--primary-color);
+        }
+        
+        .copy-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        #back-to-top {
+            background-color: var(--primary-color);
+        }
+        
+        #back-to-top:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        .return-home {
+            background-color: var(--primary-color);
+        }
+        
+        .return-home:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>React.js 开发指南</h1>
+            <p>从入门到进阶的 React.js 完整指南</p>
+        </div>
+        
+        <nav>
+            <h2>目录</h2>
+            <ul id="toc"></ul>
+        </nav>
+
+        <div class="section">
+            <h2 id="section-1">1. 环境配置</h2>
+            <div class="note">
+                <strong>前置要求：</strong>
+                <ul>
+                    <li>Node.js 14.0+</li>
+                    <li>npm 或 yarn 包管理器</li>
+                    <li>编辑器（推荐 VS Code）</li>
+                </ul>
+            </div>
+            <pre data-language="Bash"><code><span class="comment"># 使用 Create React App 创建项目</span>
+<span class="operator">npx</span> create-react-app my-app
+
+<span class="comment"># 进入项目目录</span>
+<span class="operator">cd</span> my-app
+
+<span class="comment"># 启动开发服务器</span>
+<span class="operator">npm</span> start</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-2">2. 组件开发</h2>
+            <div class="tip">
+                <strong>最佳实践：</strong>
+                <ul>
+                    <li>组件名使用大驼峰命名</li>
+                    <li>优先使用函数组件和 Hooks</li>
+                    <li>合理拆分组件，保持单一职责</li>
+                </ul>
+            </div>
+            <pre data-language="JSX"><code><span class="comment">// 函数组件示例</span>
+<span class="keyword">import</span> React, { useState } from <span class="string">'react'</span>;
+
+<span class="keyword">function</span> <span class="function">Counter</span>() {
+  <span class="keyword">const</span> [count, setCount] = useState(0);
+
+  <span class="keyword">return</span> (
+    <span class="operator">&lt;div&gt;</span>
+      <span class="operator">&lt;p&gt;</span>点击次数: {count}<span class="operator">&lt;/p&gt;</span>
+      <span class="operator">&lt;button</span> onClick={() => setCount(count + 1)}<span class="operator">&gt;</span>
+        增加
+      <span class="operator">&lt;/button&gt;</span>
+    <span class="operator">&lt;/div&gt;</span>
+  );
+}</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-3">3. Hooks 使用</h2>
+            <div class="tip">
+                <strong>常用 Hooks：</strong>
+                <ul>
+                    <li>useState - 状态管理</li>
+                    <li>useEffect - 副作用处理</li>
+                    <li>useCallback - 函数记忆</li>
+                    <li>useMemo - 值记忆</li>
+                    <li>useRef - 引用管理</li>
+                    <li>useContext - 上下文管理</li>
+                </ul>
+            </div>
+            <pre data-language="JSX"><code><span class="comment">// 自定义 Hook 示例</span>
+<span class="keyword">function</span> <span class="function">useLocalStorage</span>(key, initialValue) {
+  <span class="keyword">const</span> [storedValue, setStoredValue] = useState(() => {
+    <span class="keyword">try</span> {
+      <span class="keyword">const</span> item = window.localStorage.getItem(key);
+      <span class="keyword">return</span> item ? JSON.parse(item) : initialValue;
+    } <span class="keyword">catch</span> (error) {
+      console.error(error);
+      <span class="keyword">return</span> initialValue;
+    }
+  });
+
+  <span class="keyword">const</span> setValue = value => {
+    <span class="keyword">try</span> {
+      setStoredValue(value);
+      window.localStorage.setItem(key, JSON.stringify(value));
+    } <span class="keyword">catch</span> (error) {
+      console.error(error);
+    }
+  };
+
+  <span class="keyword">return</span> [storedValue, setValue];
+}</code></pre>
+
+            <pre data-language="JSX"><code><span class="comment">// useContext 示例</span>
+<span class="keyword">const</span> ThemeContext = React.createContext(<span class="string">'light'</span>);
+
+<span class="keyword">function</span> <span class="function">ThemeProvider</span>({ children }) {
+  <span class="keyword">const</span> [theme, setTheme] = useState(<span class="string">'light'</span>);
+
+  <span class="keyword">return</span> (
+    <span class="operator">&lt;ThemeContext.Provider</span> value={{ theme, setTheme }}<span class="operator">&gt;</span>
+      {children}
+    <span class="operator">&lt;/ThemeContext.Provider&gt;</span>
+  );
+}</code></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-4">4. 表单处理</h2>
+            <div class="note">
+                <strong>表单处理最佳实践：</strong>
+                <ul>
+                    <li>使用受控组件</li>
+                    <li>表单验证</li>
+                    <li>错误处理</li>
+                    <li>提交处理</li>
+                </ul>
+            </div>
+            <pre data-language="JSX"><code><span class="keyword">function</span> <span class="function">LoginForm</span>() {
+  <span class="keyword">const</span> [formData, setFormData] = useState({
+    username: <span class="string">''</span>,
+    password: <span class="string">''</span>
+  });
+  <span class="keyword">const</span> [errors, setErrors] = useState({});
+
+  <span class="keyword">const</span> handleChange = (e) => {
+    <span class="keyword">const</span> { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  <span class="keyword">const</span> validateForm = () => {
+    <span class="keyword">const</span> newErrors = {};
+    <span class="keyword">if</span> (!formData.username) {
+      newErrors.username = <span class="string">'用户名不能为空'</span>;
+    }
+    <span class="keyword">if</span> (!formData.password) {
+      newErrors.password = <span class="string">'密码不能为空'</span>;
+    }
+    setErrors(newErrors);
+    <span class="keyword">return</span> Object.keys(newErrors).length === 0;
+  };
+
+  <span class="keyword">const</span> handleSubmit = <span class="keyword">async</span> (e) => {
+    e.preventDefault();
+    <span class="keyword">if</span> (validateForm()) {
+      <span class="comment">// 处理表单提交</span>
+    }
+  };
+
+  <span class="keyword">return</span> (
+    <span class="operator">&lt;form</span> onSubmit={handleSubmit}<span class="operator">&gt;</span>
+      <span class="operator">&lt;div&gt;</span>
+        <span class="operator">&lt;input</span>
+          type=<span class="string">"text"</span>
+          name=<span class="string">"username"</span>
+          value={formData.username}
+          onChange={handleChange}
+        <span class="operator">/&gt;</span>
+        {errors.username && <span class="operator">&lt;span&gt;</span>{errors.username}<span class="operator">&lt;/span&gt;</span>}
+      <span class="operator">&lt;/div&gt;</span>
+      <span class="operator">&lt;button</span> type=<span class="string">"submit"</span><span class="operator">&gt;</span>登录<span class="operator">&lt;/button&gt;</span>
+    <span class="operator">&lt;/form&gt;</span>
+  );
+}</code></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-5">5. 状态管理</h2>
+            <pre data-language="JavaScript"><code><span class="comment">// Redux Toolkit 示例</span>
+<span class="keyword">import</span> { createSlice, configureStore } from <span class="string">'@reduxjs/toolkit'</span>;
+
+<span class="keyword">const</span> counterSlice = createSlice({
+  name: <span class="string">'counter'</span>,
+  initialState: {
+    value: 0
+  },
+  reducers: {
+    increment: state => {
+      state.value += 1;
+    },
+    decrement: state => {
+      state.value -= 1;
+    }
+  }
+});
+
+<span class="keyword">export</span> <span class="keyword">const</span> { increment, decrement } = counterSlice.actions;
+
+<span class="keyword">const</span> store = configureStore({
+  reducer: {
+    counter: counterSlice.reducer
+  }
+});</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-6">6. 路由配置</h2>
+            <pre data-language="JSX"><code><span class="keyword">import</span> { BrowserRouter, Routes, Route } from <span class="string">'react-router-dom'</span>;
+
+<span class="keyword">function</span> <span class="function">App</span>() {
+  <span class="keyword">return</span> (
+    <span class="operator">&lt;BrowserRouter&gt;</span>
+      <span class="operator">&lt;Routes&gt;</span>
+        <span class="operator">&lt;Route</span> path=<span class="string">"/"</span> element={<span class="operator">&lt;Home /&gt;</span>} <span class="operator">/&gt;</span>
+        <span class="operator">&lt;Route</span> path=<span class="string">"/about"</span> element={<span class="operator">&lt;About /&gt;</span>} <span class="operator">/&gt;</span>
+        <span class="operator">&lt;Route</span> path=<span class="string">"/users/:id"</span> element={<span class="operator">&lt;UserProfile /&gt;</span>} <span class="operator">/&gt;</span>
+        <span class="operator">&lt;Route</span> path=<span class="string">"*"</span> element={<span class="operator">&lt;NotFound /&gt;</span>} <span class="operator">/&gt;</span>
+      <span class="operator">&lt;/Routes&gt;</span>
+    <span class="operator">&lt;/BrowserRouter&gt;</span>
+  );
+}</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-7">7. 性能优化</h2>
+            <div class="warning">
+                <strong>注意事项：</strong>
+                <ul>
+                    <li>使用 React.memo 避免不必要的重渲染</li>
+                    <li>合理使用 useMemo 和 useCallback</li>
+                    <li>使用 Code Splitting 拆分代码</li>
+                    <li>使用虚拟列表处理大数据</li>
+                </ul>
+            </div>
+            <pre data-language="JSX"><code><span class="comment">// React.memo 示例</span>
+<span class="keyword">const</span> ExpensiveComponent = React.memo(<span class="function">function</span>({ data }) {
+  <span class="comment">// 复杂的渲染逻辑</span>
+  <span class="keyword">return</span> <span class="operator">&lt;div&gt;</span>...<span class="operator">&lt;/div&gt;</span>;
+});
+
+<span class="comment">// Code Splitting</span>
+<span class="keyword">const</span> LazyComponent = React.lazy(() => 
+  <span class="keyword">import</span>(<span class="string">'./components/HeavyComponent'</span>)
+);
+
+<span class="keyword">function</span> <span class="function">App</span>() {
+  <span class="keyword">return</span> (
+    <span class="operator">&lt;Suspense</span> fallback={<span class="operator">&lt;div&gt;</span>加载中...<span class="operator">&lt;/div&gt;</span>}<span class="operator">&gt;</span>
+      <span class="operator">&lt;LazyComponent /&gt;</span>
+    <span class="operator">&lt;/Suspense&gt;</span>
+  );
+}</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="return-home-container">
+            <button onclick="closeAndReturn()" class="return-home-button">
+                <span class="button-icon">↩</span>
+                <span class="button-text">返回首页</span>
+            </button>
+        </div>
+    </div>
+
+    <button id="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.previousElementSibling;
+            const text = codeBlock.textContent.trim();
+
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = "已复制";
+                button.classList.add("copied");
+
+                setTimeout(() => {
+                    button.textContent = "复制";
+                    button.classList.remove("copied");
+                }, 2000);
+            }).catch(err => {
+                console.error('复制失败: ', err);
+            });
+        }
+
+        function generateTOC() {
+            const toc = document.getElementById('toc');
+            const sections = document.querySelectorAll('.section h2');
+            sections.forEach(section => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.textContent = section.textContent;
+                a.href = `#${section.id}`;
+                li.appendChild(a);
+                toc.appendChild(li);
+            });
+        }
+
+        window.onload = generateTOC;
+
+        window.onscroll = function() {
+            const backToTop = document.getElementById("back-to-top");
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTop.classList.add("visible");
+            } else {
+                backToTop.classList.remove("visible");
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        function closeAndReturn() {
+            window.location.href = '/';
+            setTimeout(() => {
+                window.close();
+            }, 100);
+        }
+    </script>
+</body>
+</html> 

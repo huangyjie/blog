@@ -1,4 +1,6 @@
 # Blog Circle
+
+[![GitHub license](https://img.shields.io/github/license/huangyjie/blog)](https://github.com/huangyjie/blog/blob/main/LICENSE)
 [![Node Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org)
 [![Next.js Version](https://img.shields.io/badge/next.js-14.0.0-blue)](https://nextjs.org)
 

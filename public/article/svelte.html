@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Svelte 教程</title>
+    <link rel="icon" href="/icons/svelte.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/web.css">
+    <style>
+        :root {
+            --primary-color: #FF3E00;
+            --secondary-color: #FF8C66;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Svelte 教程</h1>
+            <p>现代化的前端开发框架</p>
+        </header>
+        
+        <nav>
+            <h2>目录</h2>
+            <ul id="toc"></ul>
+        </nav>
+
+        <div class="section">
+            <h2 id="section-1">1. 环境配置</h2>
+            <div class="note">
+                <strong>前置要求：</strong>
+                <ul>
+                    <li>Node.js 16+</li>
+                    <li>npm 或 pnpm 包管理器</li>
+                    <li>编辑器（推荐 VS Code + Svelte 插件）</li>
+                </ul>
+            </div>
+            <pre data-language="Bash"><code><span class="comment"># 创建新项目</span>
+<span class="operator">npm</span> create svelte@latest my-app
+
+<span class="comment"># 安装依赖</span>
+<span class="operator">cd</span> my-app
+<span class="operator">npm</span> install
+
+<span class="comment"># 启动开发服务器</span>
+<span class="operator">npm</span> run dev</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-2">2. 组件开发</h2>
+            <div class="tip">
+                <strong>最佳实践：</strong>
+                <ul>
+                    <li>组件文件使用 .svelte 扩展名</li>
+                    <li>组件名使用大驼峰命名</li>
+                    <li>保持组件的单一职责</li>
+                    <li>合理使用插槽和事件转发</li>
+                </ul>
+            </div>
+            <pre data-language="Svelte"><code><span class="comment"><!-- Counter.svelte --></span>
+<span class="operator">&lt;script&gt;</span>
+  <span class="keyword">let</span> count = 0;
+  <span class="keyword">export</span> <span class="keyword">let</span> title = <span class="string">'计数器'</span>;
+
+  <span class="keyword">function</span> <span class="function">increment</span>() {
+    count += 1;
+  }
+
+  <span class="keyword">$:</span> doubled = count * 2;
+<span class="operator">&lt;/script&gt;</span>
+
+<span class="operator">&lt;div</span> class=<span class="string">"counter"</span><span class="operator">&gt;</span>
+  <span class="operator">&lt;h2&gt;</span>{title}<span class="operator">&lt;/h2&gt;</span>
+  <span class="operator">&lt;p&gt;</span>当前计数: {count}<span class="operator">&lt;/p&gt;</span>
+  <span class="operator">&lt;p&gt;</span>双倍值: {doubled}<span class="operator">&lt;/p&gt;</span>
+  <span class="operator">&lt;button</span> on:click={increment}<span class="operator">&gt;</span>增加<span class="operator">&lt;/button&gt;</span>
+<span class="operator">&lt;/div&gt;</span>
+
+<span class="operator">&lt;style&gt;</span>
+  .counter {
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+<span class="operator">&lt;/style&gt;</span></code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-3">3. 状态管理</h2>
+            <pre data-language="JavaScript"><code><span class="comment">// stores.js</span>
+<span class="keyword">import</span> { writable, derived } from <span class="string">'svelte/store'</span>;
+
+<span class="keyword">export</span> <span class="keyword">const</span> count = writable(0);
+
+<span class="keyword">export</span> <span class="keyword">const</span> doubled = derived(
+  count,
+  $count => $count * 2
+);
+
+<span class="comment">// 在组件中使用</span>
+<span class="operator">&lt;script&gt;</span>
+  <span class="keyword">import</span> { count, doubled } from <span class="string">'./stores.js'</span>;
+<span class="operator">&lt;/script&gt;</span>
+
+<span class="operator">&lt;button</span> on:click={() => $count++}<span class="operator">&gt;</span>
+  计数: {$count}
+<span class="operator">&lt;/button&gt;</span>
+
+<span class="operator">&lt;p&gt;</span>双倍值: {$doubled}<span class="operator">&lt;/p&gt;</span></code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-4">4. 动画效果</h2>
+            <pre data-language="Svelte"><code><span class="operator">&lt;script&gt;</span>
+  <span class="keyword">import</span> { fade, fly } from <span class="string">'svelte/transition'</span>;
+  <span class="keyword">import</span> { spring } from <span class="string">'svelte/motion'</span>;
+
+  <span class="keyword">let</span> visible = true;
+  
+  <span class="keyword">const</span> coords = spring({ x: 0, y: 0 }, {
+    stiffness: 0.2,
+    damping: 0.4
+  });
+
+  <span class="keyword">function</span> <span class="function">handleMousemove</span>(event) {
+    coords.set({ x: event.clientX, y: event.clientY });
+  }
+<span class="operator">&lt;/script&gt;</span>
+
+<span class="operator">&lt;div</span> on:mousemove={handleMousemove}<span class="operator">&gt;</span>
+  {#if visible}
+    <span class="operator">&lt;div</span>
+      transition:fly={{ y: 200, duration: 2000 }}
+      style=<span class="string">"transform: translate({$coords.x}px, {$coords.y}px)"</span>
+    <span class="operator">&gt;</span>
+      动画元素
+    <span class="operator">&lt;/div&gt;</span>
+  {/if}
+<span class="operator">&lt;/div&gt;</span></code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-5">5. 生命周期</h2>
+            <pre data-language="Svelte"><code><span class="operator">&lt;script&gt;</span>
+  <span class="keyword">import</span> { onMount, onDestroy, beforeUpdate, afterUpdate } from <span class="string">'svelte'</span>;
+
+  <span class="keyword">let</span> count = 0;
+
+  onMount(() => {
+    console.log(<span class="string">'组件已挂载'</span>);
+    <span class="keyword">return</span> () => {
+      console.log(<span class="string">'清理工作'</span>);
+    };
+  });
+
+  beforeUpdate(() => {
+    console.log(<span class="string">'即将更新'</span>, count);
+  });
+
+  afterUpdate(() => {
+    console.log(<span class="string">'已经更新'</span>, count);
+  });
+
+  onDestroy(() => {
+    console.log(<span class="string">'组件即将销毁'</span>);
+  });
+<span class="operator">&lt;/script&gt;</span>
+
+<span class="operator">&lt;button</span> on:click={() => count++}<span class="operator">&gt;</span>
+  点击 {count}
+<span class="operator">&lt;/button&gt;</span></code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-6">6. 事件处理</h2>
+            <div class="warning">
+                <strong>注意事项：</strong>
+                <ul>
+                    <li>使用事件修饰符</li>
+                    <li>事件转发</li>
+                    <li>自定义事件</li>
+                    <li>事件委托</li>
+                </ul>
+            </div>
+            <pre data-language="Svelte"><code><span class="operator">&lt;script&gt;</span>
+  <span class="keyword">import</span> { createEventDispatcher } from <span class="string">'svelte'</span>;
+  <span class="keyword">const</span> dispatch = createEventDispatcher();
+
+  <span class="keyword">function</span> <span class="function">handleClick</span>(event) {
+    dispatch(<span class="string">'message'</span>, {
+      text: <span class="string">'Hello!'</span>
+    });
+  }
+<span class="operator">&lt;/script&gt;</span>
+
+<span class="comment"><!-- 事件修饰符 --></span>
+<span class="operator">&lt;button</span>
+  on:click|preventDefault|stopPropagation={handleClick}
+  on:click|once={() => console.log(<span class="string">'只触发一次'</span>)}
+<span class="operator">&gt;</span>
+  点击我
+<span class="operator">&lt;/button&gt;</span>
+
+<span class="comment"><!-- 事件转发 --></span>
+<span class="operator">&lt;button</span> on:click<span class="operator">&gt;</span>
+  点击事件会被转发到父组件
+<span class="operator">&lt;/button&gt;</span></code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="section">
+            <h2 id="section-7">7. 性能优化</h2>
+            <pre data-language="Svelte"><code><span class="comment"><!-- 使用 tick 函数 --></span>
+<span class="operator">&lt;script&gt;</span>
+  <span class="keyword">import</span> { tick } from <span class="string">'svelte'</span>;
+  
+  <span class="keyword">let</span> text = <span class="string">''</span>;
+  
+  <span class="keyword">async</span> <span class="function">function</span> handleInput() {
+    text = <span class="string">'更新的文本'</span>;
+    <span class="keyword">await</span> tick();
+    <span class="comment">// DOM 已经更新</span>
+  }
+<span class="operator">&lt;/script&gt;</span>
+
+<span class="comment"><!-- 使用 #key 块进行优化 --></span>
+{#key value}
+  <span class="operator">&lt;div</span> transition:fade<span class="operator">&gt;</span>
+    {value}
+  <span class="operator">&lt;/div&gt;</span>
+{/key}</code><button class="copy-btn" onclick="copyCode(this)">复制</button></pre>
+        </div>
+
+        <div class="return-home-container">
+            <button onclick="closeAndReturn()" class="return-home-button">
+                <span class="button-icon">↩</span>
+                <span class="button-text">返回首页</span>
+            </button>
+        </div>
+    </div>
+
+    <button id="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.previousElementSibling;
+            const text = codeBlock.textContent.trim();
+
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = "已复制";
+                button.classList.add("copied");
+
+                setTimeout(() => {
+                    button.textContent = "复制";
+                    button.classList.remove("copied");
+                }, 2000);
+            }).catch(err => {
+                console.error('复制失败: ', err);
+            });
+        }
+
+        function generateTOC() {
+            const toc = document.getElementById('toc');
+            const sections = document.querySelectorAll('.section h2');
+            sections.forEach(section => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.textContent = section.textContent;
+                a.href = `#${section.id}`;
+                li.appendChild(a);
+                toc.appendChild(li);
+            });
+        }
+
+        window.onload = generateTOC;
+
+        window.onscroll = function() {
+            const backToTop = document.getElementById("back-to-top");
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTop.classList.add("visible");
+            } else {
+                backToTop.classList.remove("visible");
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        function closeAndReturn() {
+            window.location.href = '/';
+            setTimeout(() => {
+                window.close();
+            }, 100);
+        }
+    </script>
+</body>
+</html> 

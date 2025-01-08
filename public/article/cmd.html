@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/icons/terminal.svg" type="image/svg+xml">
+    <title>CMD命令大全</title>
+    <link rel="stylesheet" href="css/web.css">
+    <style>
+        :root {
+            --primary-color: #0A0C10;
+            --secondary-color: #238636;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .command-block {
+            background: #1E1E1E;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .command-name {
+            color: #569CD6;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .command-syntax {
+            color: #CE9178;
+            font-family: 'Consolas', 'Monaco', monospace;
+            background: #2D2D2D;
+            padding: 0.75rem;
+            border-radius: 4px;
+            margin: 0.5rem 0;
+            border-left: 3px solid #569CD6;
+        }
+
+        .command-description {
+            color: #D4D4D4;
+            margin: 0.5rem 0;
+        }
+
+        .command-block ul {
+            margin-top: 0.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .command-block ul li {
+            color: #B5B5B5;
+            margin: 0.25rem 0;
+        }
+
+        .command-block ul li code {
+            background: #2D2D2D;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            color: #CE9178;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>CMD命令大全</h1>
+            <p>Windows命令提示符(CMD)常用命令详解</p>
+        </header>
+
+        <nav>
+            <h2>目录</h2>
+            <ul id="toc"></ul>
+        </nav>
+
+        <main>
+            <section class="section" id="basic">
+                <h2>1. 基础命令</h2>
+                
+                <div class="command-block">
+                    <p class="command-name">dir</p>
+                    <p class="command-syntax">dir [路径] [/参数]</p>
+                    <p class="command-description">显示目录中的文件和子目录列表</p>
+                    <ul>
+                        <li><code>/w</code> - 宽格式显示</li>
+                        <li><code>/p</code> - 分页显示</li>
+                        <li><code>/a</code> - 显示具有指定属性的文件</li>
+                        <li><code>/s</code> - 显示指定目录和所有子目录中的文件</li>
+                        <li><code>/b</code> - 使用空格格式(没有标题信息或摘要)</li>
+                    </ul>
+                </div>
+
+                <div class="command-block">
+                    <p class="command-name">cd (Change Directory)</p>
+                    <p class="command-syntax">cd [路径]</p>
+                    <p class="command-description">更改当前目录或显示当前目录名</p>
+                    <ul>
+                        <li><code>cd ..</code> - 返回上级目录</li>
+                        <li><code>cd \</code> - 返回根目录</li>
+                        <li><code>cd /d D:</code> - 切换到其他盘符</li>
+                        <li><code>cd.</code> - 显示当前目录路径</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="section" id="file-operations">
+                <h2>2. 文件操作</h2>
+                
+                <div class="command-block">
+                    <p class="command-name">copy</p>
+                    <p class="command-syntax">copy [源文件] [目标路径]</p>
+                    <p>复制文件到另一个位置</p>
+                </div>
+
+                <div class="command-block">
+                    <p class="command-name">del</p>
+                    <p class="command-syntax">del [文件名]</p>
+                    <p>删除一个或多个文件</p>
+                </div>
+
+                <div class="command-block">
+                    <p class="command-name">move</p>
+                    <p class="command-syntax">move [源文件] [目标路径]</p>
+                    <p>移动文件到新位置</p>
+                </div>
+            </section>
+
+            <section class="section" id="directory-operations">
+                <h2>3. 目录操作</h2>
+                
+                <div class="command-block">
+                    <p class="command-name">mkdir</p>
+                    <p class="command-syntax">mkdir [目录名]</p>
+                    <p>创建新目录</p>
+                </div>
+
+                <div class="command-block">
+                    <p class="command-name">rmdir</p>
+                    <p class="command-syntax">rmdir [目录名] [/s] [/q]</p>
+                    <p>删除目录</p>
+                    <ul>
+                        <li>/s - 删除所有子目录和文件</li>
+                        <li>/q - 安静模式</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="section" id="network">
+                <h2>4. 网络命令</h2>
+                
+                <div class="command-block">
+                    <p class="command-name">ipconfig</p>
+                    <p class="command-syntax">ipconfig [/all] [/release] [/renew]</p>
+                    <p class="command-description">显示和管理网络配置</p>
+                    <ul>
+                        <li><code>/all</code> - 显示完整配置信息</li>
+                        <li><code>/release</code> - 释放指定适配器的IP地址</li>
+                        <li><code>/renew</code> - 更新指定适配器的IP地址</li>
+                        <li><code>/flushdns</code> - 清除DNS解析程序缓存</li>
+                    </ul>
+                </div>
+
+                <div class="command-block">
+                    <p class="command-name">ping</p>
+                    <p class="command-syntax">ping [主机名或IP]</p>
+                    <p>测试网络连接</p>
+                </div>
+
+                <div class="command-block">
+                    <p class="command-name">netstat</p>
+                    <p class="command-syntax">netstat [-an]</p>
+                    <p>显示协议统计和当前TCP/IP网络连接</p>
+                </div>
+            </section>
+
+            <section class="section" id="system">
+                <h2>5. 系统命令</h2>
+                
+                <div class="command-block">
+                    <p class="command-name">tasklist</p>
+                    <p class="command-syntax">tasklist [/参数]</p>
+                    <p>显示当前运行的进程列表</p>
+                </div>
+
+                <div class="command-block">
+                    <p class="command-name">taskkill</p>
+                    <p class="command-syntax">taskkill /pid [进程ID] 或 /im [进程名]</p>
+                    <p>终止进程</p>
+                </div>
+
+                <div class="command-block">
+                    <p class="command-name">systeminfo</p>
+                    <p class="command-syntax">systeminfo</p>
+                    <p>显示系统信息</p>
+                </div>
+            </section>
+
+            <section class="section" id="advanced">
+                <h2>6. 高级命令</h2>
+                
+                <div class="command-block">
+                    <p class="command-name">sfc</p>
+                    <p class="command-syntax">sfc /scannow</p>
+                    <p>系统文件检查器</p>
+                </div>
+
+                <div class="command-block">
+                    <p class="command-name">chkdsk</p>
+                    <p class="command-syntax">chkdsk [盘符:] [/f] [/r]</p>
+                    <p>检查磁盘并显示状态报告</p>
+                </div>
+            </section>
+
+            <section class="section" id="tips">
+                <h2>7. 使用技巧</h2>
+                <ul>
+                    <li>使用上下方向键可以查看命令历史</li>
+                    <li>使用Tab键可以自动补全文件名和目录名</li>
+                    <li>使用cls命令可以清空屏幕</li>
+                    <li>使用help命令可以查看所有可用命令</li>
+                    <li>在命令后加/?可以查看该命令的帮助信息</li>
+                </ul>
+            </section>
+        </main>
+
+        <div class="return-home-container">
+            <button onclick="closeAndReturn()" class="return-home-button">
+                <span class="button-icon">↩</span>
+                <span class="button-text">返回首页</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function generateTOC() {
+            const toc = document.getElementById('toc');
+            const sections = document.querySelectorAll('.section h2');
+            sections.forEach(section => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.textContent = section.textContent;
+                a.href = `#${section.parentElement.id}`;
+                li.appendChild(a);
+                toc.appendChild(li);
+            });
+        }
+
+        window.onload = generateTOC;
+
+        function closeAndReturn() {
+            window.location.href = '/';
+            setTimeout(() => {
+                window.close();
+            }, 100);
+        }
+    </script>
+</body>
+</html> 
